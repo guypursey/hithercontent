@@ -1,5 +1,5 @@
 var https = require("https"),
-  fs = require ("fs"),
+  fs = require("fs"),
   auth = JSON.parse(fs.readFileSync("_auth.json", { "encoding": "utf8" })),
   request = "/items?project_id=" + auth.project;
 
