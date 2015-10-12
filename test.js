@@ -3,7 +3,7 @@ var https = require("https"),
   auth = JSON.parse(fs.readFileSync("_auth.json", { "encoding": "utf8" })),
   request = "/items?project_id=" + auth.project;
 
-var getJSONfromAPI = function (request, output) {
+var getJSONfromAPI = function (request, output, callback) {
 
   var options = {
     auth: auth.user + ":" + auth.pass,
@@ -29,6 +29,9 @@ var getJSONfromAPI = function (request, output) {
         fs.writeFile(output, c, { "encoding": "utf8" }, function (d, e) {
           if (e) throw e;
         });
+      }
+      if (callback && typeof callback === "function") {
+        callback(d);
       }
     });
 
