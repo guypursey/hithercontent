@@ -28,6 +28,7 @@ var getJSONfromAPI = function (request, output, callback) {
         var c = JSON.stringify(d, null, "\t");
         fs.writeFile(output, c, { "encoding": "utf8" }, function (d, e) {
           if (e) throw e;
+          console.log("File written.", output);
         });
       }
       if (callback && typeof callback === "function") {
@@ -43,4 +44,19 @@ var getJSONfromAPI = function (request, output, callback) {
 
 };
 
-getJSONfromAPI(request, "output.json");
+var items = {};
+
+var items_cb = function (d) {
+  var i = d.data.length;
+  while (i) {
+    i--;
+    items[d.data[i].id] = d.data[i];
+    getJSONfromAPI("/items/" + d.data[i].id, "items/" + d.data[i].id + ".json");
+  }
+
+  fs.writeFile("sorted_output.json", JSON.stringify(items, null, "\t"), { "encoding": "utf8" }, function (d, e) {
+    if (e) throw e;
+  });
+}
+
+getJSONfromAPI(request, "output.json", items_cb);
