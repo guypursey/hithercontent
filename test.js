@@ -1,7 +1,10 @@
 var https = require("https"),
   fs = require("fs"),
   auth = JSON.parse(fs.readFileSync("_auth.json", { "encoding": "utf8" })),
-  request = "/items?project_id=" + auth.project;
+  request = "/items?project_id=" + auth.project,
+  source = fs.readFileSync("./layouts/default.html", { "encoding": "utf8" }),
+  handlebars = require("handlebars"),
+  layout = handlebars.compile(source);
 
 var getJSONfromAPI = function (request, output, callback) {
 
@@ -28,7 +31,7 @@ var getJSONfromAPI = function (request, output, callback) {
         var c = JSON.stringify(d, null, "\t");
         fs.writeFile(output, c, { "encoding": "utf8" }, function (d, e) {
           if (e) throw e;
-          console.log("File written.", output);
+          console.log("Raw written.", output);
         });
       }
       if (callback && typeof callback === "function") {
@@ -43,8 +46,6 @@ var getJSONfromAPI = function (request, output, callback) {
   });
 
 };
-
-
 
 var items = {};
 
@@ -68,7 +69,12 @@ var processItem = function (d) {
 
   fs.writeFile("items/" + d.data.id + ".json", JSON.stringify(items[d.data.id], null, "\t"), { "encoding": "utf8" }, function (c, e) {
     if (e) throw e;
-    console.log("file written", d.data.id);
+    console.log("Item written", d.data.id);
+  });
+
+  fs.writeFile("pages/" + d.data.id + ".html", layout(items[d.data.id]), { "encoding": "utf8" }, function (c, e) {
+    if (e) throw e;
+    console.log("Page written", d.data.id);
   });
 };
 
