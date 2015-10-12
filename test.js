@@ -80,10 +80,6 @@ var items_cb = function (d) {
     items[d.data[i].id] = {};
     getJSONfromAPI("/items/" + d.data[i].id, "raw/" + d.data[i].id + ".json", processItem);
   }
-
-  fs.writeFile("sorted_output.json", JSON.stringify(items, null, "\t"), { "encoding": "utf8" }, function (d, e) {
-    if (e) throw e;
-  });
-}
+};
 
 getJSONfromAPI(request, "output.json", items_cb);
