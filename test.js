@@ -24,8 +24,8 @@ var getJSONfromAPI = function (request, output) {
 
     res.on("end", function () {
       var d = JSON.parse(body);
-      var c = JSON.stringify(d, null, "\t");
       if (output && typeof output === "string") {
+        var c = JSON.stringify(d, null, "\t");
         fs.writeFile(output, c, { "encoding": "utf8" }, function (d, e) {
           if (e) throw e;
         });
