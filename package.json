@@ -1,0 +1,21 @@
+{
+  "name": "view-gathercontent",
+  "version": "0.0.0",
+  "description": "A way to view content pulled from GatherContent's API.",
+  "main": "test.js",
+  "engines": {
+    "node": ">=4.0.* <=4.2.*"
+  },
+  "dependencies": {
+    "handlebars": "~4.0.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "GatherContent"
+  ],
+  "author": "Guy Pursey",
+  "license": "BSD-2-Clause"
+}
