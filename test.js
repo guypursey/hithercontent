@@ -21,21 +21,14 @@ var getJSONfromAPI = function (request, callback) {
 
     var body = "";
 
-    res.on("data", function (d) {
-      body += d;
+    res.on("data", function (chunk) {
+      body += chunk;
     });
 
     res.on("end", function () {
-      var d = JSON.parse(body);
-      if (output && typeof output === "string") {
-        var c = JSON.stringify(d, null, "\t");
-        fs.writeFile(output, c, { "encoding": "utf8" }, function (d, e) {
-          if (e) throw e;
-          console.log("Raw written.", output);
-        });
-      }
+      var data = JSON.parse(body);
       if (callback && typeof callback === "function") {
-        callback(d);
+        callback(data);
       }
     });
 
