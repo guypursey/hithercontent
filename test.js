@@ -6,7 +6,7 @@ var https = require("https"),
   handlebars = require("handlebars"),
   layout = handlebars.compile(source);
 
-var getJSONfromAPI = function (request, output, callback) {
+var getJSONfromAPI = function (request, callback) {
 
   var options = {
     auth: auth.user + ":" + auth.pass,
@@ -73,6 +73,13 @@ var processItem = function (d) {
 
   var item = reduceItemToKVPairs(d);
 
+  // write raw JSON for each item to its own file in a `raw` folder
+  fs.writeFile("raw/" + d.data.id + ".json", JSON.stringify(d, null, "/t"), { "encoding": "utf8" }, function (c, e) {
+    if (e) throw e;
+    console.log("Item written", d.data.id);
+  });
+
+  // write each reduced item (key-value pairs) to its own file in an `items` folder
   fs.writeFile("items/" + d.data.id + ".json", JSON.stringify(item, null, "\t"), { "encoding": "utf8" }, function (c, e) {
     if (e) throw e;
     console.log("Item written", d.data.id);
@@ -85,13 +92,13 @@ var processItem = function (d) {
 };
 
 
-var items_cb = function (d) {
+var processAllItems = function (d) {
   var i = d.data.length;
   while (i) {
     i--;
     items[d.data[i].id] = {};
-    getJSONfromAPI("/items/" + d.data[i].id, "raw/" + d.data[i].id + ".json", processItem);
+    getJSONfromAPI("/items/" + d.data[i].id, processItem);
   }
 };
 
-getJSONfromAPI(request, "output.json", items_cb);
+getJSONfromAPI(request, processAllItems);
