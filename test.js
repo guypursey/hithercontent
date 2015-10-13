@@ -50,29 +50,26 @@ var getJSONfromAPI = function (request, output, callback) {
 var items = {};
 
 var processItem = function (d) {
+  var item = items[d.data.id];
   d.data.config.forEach(function (v, i, a) {
     var tab_label = v.label;
     v.elements.forEach(function (v, i, a) {
       var k = tab_label + "_" + v.label;
       k = k && k.replace(/\s/g, "-");
       if (v.type === "text") {
-        items[d.data.id][k] = v.value;
+        item[k] = v.value;
       } else if (v.type === "choice_checkbox" || v.type === "choice_radio") {
-        items[d.data.id][k] = v.options.filter(function (v, i, a) {
-          return v.selected;
-        }).map(function (v, i, a) {
-          return v.label;
-        });
+        item[k] = v.options.filter(v => v.selected).map(v => v.label);
       }
     });
   });
 
-  fs.writeFile("items/" + d.data.id + ".json", JSON.stringify(items[d.data.id], null, "\t"), { "encoding": "utf8" }, function (c, e) {
+  fs.writeFile("items/" + d.data.id + ".json", JSON.stringify(item, null, "\t"), { "encoding": "utf8" }, function (c, e) {
     if (e) throw e;
     console.log("Item written", d.data.id);
   });
 
-  fs.writeFile("pages/" + d.data.id + ".html", layout(items[d.data.id]), { "encoding": "utf8" }, function (c, e) {
+  fs.writeFile("pages/" + d.data.id + ".html", layout(item), { "encoding": "utf8" }, function (c, e) {
     if (e) throw e;
     console.log("Page written", d.data.id);
   });
