@@ -58,7 +58,7 @@ var reduceItemToKVPairs = function (d) {
 };
 
 
-
+// sample code using functions above
 
 var items = {};
 
@@ -78,6 +78,7 @@ var processItem = function (d) {
     console.log("Item written", d.data.id);
   });
 
+  // write each rendered item processed with Handlebars to its own file in a `pages` folder
   fs.writeFile("pages/" + d.data.id + ".html", layout(item), { "encoding": "utf8" }, function (c, e) {
     if (e) throw e;
     console.log("Page written", d.data.id);
