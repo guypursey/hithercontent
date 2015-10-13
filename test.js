@@ -47,10 +47,8 @@ var getJSONfromAPI = function (request, output, callback) {
 
 };
 
-var items = {};
-
-var processItem = function (d) {
-  var item = items[d.data.id];
+var reduceItemToKVPairs = function (d) {
+  var item = {};
   d.data.config.forEach(function (v, i, a) {
     var tab_label = v.label;
     v.elements.forEach(function (v, i, a) {
@@ -63,6 +61,17 @@ var processItem = function (d) {
       }
     });
   });
+  return item;
+};
+
+
+
+
+var items = {};
+
+var processItem = function (d) {
+
+  var item = reduceItemToKVPairs(d);
 
   fs.writeFile("items/" + d.data.id + ".json", JSON.stringify(item, null, "\t"), { "encoding": "utf8" }, function (c, e) {
     if (e) throw e;
