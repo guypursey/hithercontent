@@ -2,7 +2,8 @@
   "name": "hithercontent",
   "version": "0.0.0",
   "description": "A Node.js package for interacting with GatherContent's API.",
-  "main": "test.js",
+  "main": "index.js",
+  "repository": "guypursey/hithercontent",
   "engines": {
     "node": ">=4.0.* <=4.2.*"
   },
