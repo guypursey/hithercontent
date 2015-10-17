@@ -7,15 +7,13 @@
   "engines": {
     "node": ">=4.0.* <=4.2.*"
   },
-  "dependencies": {
-    "handlebars": "~4.0.3"
-  },
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "GatherContent"
+    "GatherContent",
+    "API"
   ],
   "author": "Guy Pursey <guypursey@gmail.com>",
   "license": "BSD-2-Clause"
