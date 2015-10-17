@@ -10,7 +10,7 @@ Create a JSON file containing an object with the following properties:
  - `akey`: the value should be the API key -- you will need to generate this if
  you haven't already
 
-Let's say your JSON file is called `auth.json`. The following code will
+Let's say your JSON file is called `_auth.json`. The following code will
 initiate the `hithercontent` for use with your project.
 
     var fs = require("_auth.json"),
