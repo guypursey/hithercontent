@@ -21,6 +21,15 @@ initiate the `hithercontent` for use with your project.
 You can then use the initiated `hithercontent` object to fetch content from
 the GatherContent API.
 
+## Example
+
+Assuming you have a string called `request` containing the API call details,
+for example, where `project` is the project ID or number:
+
+    var request = "/items?project_id=" + project;
+
+You can then use the following to access and work with the content.
+
     hithercontent.getJSONfromAPI(request, function(data) {
         console.log(data);
     });
@@ -43,7 +52,7 @@ Nothing. Acts asynchronously using the `callback` argument.
 
 #### Arguments
 
- - `data`: Object. Required. The object you want to reduce.
+ - `data`: *Object.* **Required.** The object you want to reduce.
 
 #### Returns
 
