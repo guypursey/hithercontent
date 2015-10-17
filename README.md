@@ -21,6 +21,8 @@ initiate the `hithercontent` for use with your project.
 You can then use the initiated `hithercontent` object to fetch content from
 the GatherContent API.
 
+*(Tip: If using Git to version your code, add `_auth.js` or your equivalent filename to your `.gitignore` file. Storing your username and API key in a separate JSON file means you can version your code and share it without worrying about releasing the details to the public. By adding the authentication details filename to `.gitignore`, you remove the risk of accidentally commiting the details to your repository.)*
+
 ## Example
 
 Assuming you have a string called `request` containing the API call details,
