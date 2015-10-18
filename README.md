@@ -13,10 +13,11 @@ Create a JSON file containing an object with the following properties:
 Let's say your JSON file is called `_auth.json`. The following code will
 initiate the `hithercontent` for use with your project.
 
-    var fs = require("_auth.json"),
+    var fs = require("fs"),
+        auth = JSON.parse(fs.readFileSync("_auth.json", { "encoding": "utf8" })),
         hithercontent = require("hithercontent");
 
-    hithercontent.init();
+    hithercontent.init(auth);
 
 You can then use the initiated `hithercontent` object to fetch content from
 the GatherContent API.
