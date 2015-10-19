@@ -18,7 +18,7 @@ describe("Getting JSON from API", function() {
         it("should inform the user that an incorrect path has been provided", function (done) {
             hithercontent.init(auth);
             hithercontent.getJSONfromAPI("/items/0", function (data) {
-                expect(data).to.be.an("array");
+                expect(data).to.be.an("object");
                 done();
             });
         });

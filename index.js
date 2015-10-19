@@ -35,7 +35,7 @@ module.exports = (function () {
       });
 
       res.on("end", function () {
-        var data = JSON.parse(body);
+        var data = (typeof body === "object") ? JSON.parse(body) : {};
         if (callback && typeof callback === "function") {
           callback(data);
         }
