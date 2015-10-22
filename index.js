@@ -50,7 +50,13 @@ module.exports = (function () {
   };
 
   var reduceItemToKVPairs = function (d) {
-    var item = {};
+    var item = {},
+        k;
+    for (k in d.data) {
+        if (k !== "config" && d.data.hasOwnProperty(k)) {
+            item["_" + k] = d.data[k]
+        }
+    }
     d.data.config.forEach(function (v, i, a) {
       var tab_label = v.label;
       v.elements.forEach(function (v, i, a) {
