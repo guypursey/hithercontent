@@ -59,4 +59,4 @@ Nothing. Acts asynchronously using the `callback` argument.
 
 #### Returns
 
-An object containing key-value pairs for each of the properties on a GatherContent page. This gets rid of all the IDs and extraneous data that the API gives you and simply gives you the content on a page in a label and content format.
+An object containing key-value pairs for each of the properties on a GatherContent page. This flattens everything in `config` and prefixes all the other data that the API gives you and simply gives you the properties and content for a page in a label and content format. The labels are formed by taking the label name from the page and prefixing it with the tab name, separated by an underscore. General properties for the page are simply prefixed with an underscore as they don't belong under a specific tab.
