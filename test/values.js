@@ -116,11 +116,25 @@ var sample_data = {
     }
 
 describe("Reducing GatherContent item JSON to key-value pairs", function () {
-    describe("should return each content field value, no matter its type, as a simple string", function () {
-        it("like the text type")
-        it("like the multiple choice type")
-        it("like the checkboxes type")
-        it("like the section type")
-        it("like the attachment type")
+    describe("should return a simpler object", function () {
+        it("where keys with spaces are replaced with hyphens")
+        it("where keys for content are prefixed by their label name and an underscore")
+        it("where keys for metadata are prefixed by an underscore")
+    })
+
+    describe("should declutter each content field value according to its type", function () {
+        it("like the text type which should return as a string")
+        it("like the multiple choice type which should return as an array")
+        it("like the checkboxes type which should return as an array")
+        it("like the section type which should return as an object")
+        it("like the attachment type which should return as a string")
+    })
+
+    describe ("should return each content field value accurately", function () {
+        it("including text values")
+        it("including any selected multiple choice value")
+        it("including any ticked checkbox")
+        it("including section titles and subtitles")
+        it("including attachments")
     })
 })
