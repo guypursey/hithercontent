@@ -1,4 +1,5 @@
-var https = require("https");
+var https = require("https"),
+    isjson = require("is-json");
 
 module.exports = (function () {
 
@@ -35,7 +36,7 @@ module.exports = (function () {
       });
 
       res.on("end", function () {
-        var data = (typeof body === "object") ? JSON.parse(body) : {};
+        var data = isjson(body) ? JSON.parse(body) : {};
         if (callback && typeof callback === "function") {
           callback(data);
         }
