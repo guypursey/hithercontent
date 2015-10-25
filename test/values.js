@@ -117,8 +117,19 @@ var sample_data = {
 
 describe("Reducing GatherContent item JSON to key-value pairs", function () {
     describe("should return a simpler object", function () {
-        it("where keys with spaces are replaced with hyphens")
-        it("where keys for content are prefixed by their label name and an underscore")
+        it("where keys with spaces are replaced with hyphens", function () {
+            var sample_data = {
+                    "data": {
+                        "key with several words": ""
+                    }
+                },
+                result = hithercontent.reduceItemToKVPairs(sample_data)
+            expect(result).to.have.all.keys(["key-with-several-words"])
+        })
+        it("where keys for content are prefixed by their label name and an underscore", function () {
+            var result = hithercontent.reduceItemToKVPairs(sample_data);
+            expect(result).to.have.property("First-tab_Checkbox-example")
+        })
         it("where keys for metadata are prefixed by an underscore")
     })
 
