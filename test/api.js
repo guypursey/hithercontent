@@ -32,9 +32,9 @@ describe("Getting JSON from API", function() {
     });
 
     describe("without initialisation", function () {
-        it("should inform the user that the `hithercontent` has not been properly initialised", function (done) {
+        it("should return an empty object", function (done) {
             hithercontent.getJSONfromAPI("/items/0", function (data) {
-                expect(data).to.be.an("object");
+                expect(data).to.be.empty;
                 done();
             });
         })
