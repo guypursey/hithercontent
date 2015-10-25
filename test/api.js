@@ -40,22 +40,30 @@ describe("Getting JSON from API", function() {
         })
     });
 
-    describe.skip("using an incorrect path", function () {
-        it("should inform the user that an incorrect path has been provided", function (done) {
-            hithercontent.getJSONfromAPI("/items/0", function (data) {
-                expect(data).to.be.an("object");
-                done();
+    describe("with initialisation", function () {
+
+        before(function () {
+            hithercontent.init(auth);
+        });
+
+        describe.skip("using an incorrect path", function () {
+            it("should inform the user that an incorrect path has been provided", function (done) {
+                hithercontent.getJSONfromAPI("/items/0", function (data) {
+                    expect(data).to.be.empty;
+                    done();
+                });
             });
         });
+
+        describe("with a correct path", function () {
+            it("should return a usable data object", function (done) {
+                hithercontent.getJSONfromAPI("/items/1512999", function (data) {
+                    expect(data).to.be.an("object");
+                    done();
+                });
+            })
+        });
+
     });
 
-    describe("from a correct path", function () {
-        it("should return a usable data object", function (done) {
-            hithercontent.init(auth);
-            hithercontent.getJSONfromAPI("/items/1512999", function (data) {
-                expect(data).to.be.an("object");
-                done();
-            });
-        })
-    });
 });
