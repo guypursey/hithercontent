@@ -124,7 +124,7 @@ describe("Reducing GatherContent item JSON to key-value pairs", function () {
                     }
                 },
                 result = hithercontent.reduceItemToKVPairs(sample_data)
-            expect(result).to.have.all.keys(["key-with-several-words"])
+            expect(result).to.have.all.keys(["_key-with-several-words"])
         })
         it("where keys for content are prefixed by their label name and an underscore", function () {
             var result = hithercontent.reduceItemToKVPairs(sample_data);
