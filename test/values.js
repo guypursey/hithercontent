@@ -127,8 +127,25 @@ describe("Reducing GatherContent item JSON to key-value pairs", function () {
             expect(result).to.have.all.keys(["_key-with-several-words"])
         })
         it("where keys for content are prefixed by their label name and an underscore", function () {
-            var result = hithercontent.reduceItemToKVPairs(sample_data);
-            expect(result).to.have.property("First-tab_Checkbox-example")
+            var sample_data = {
+                    "data": {
+                        "config": [
+                            {
+                                "label": "First tab",
+                                "elements": [
+                                    {
+                                        "label": "Text example",
+                                        "type": "text",
+                                        "value": "Example"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                result = hithercontent.reduceItemToKVPairs(sample_data);
+            console.log(result)
+            expect(result).to.have.property("First-tab_Text-example")
         })
         it("where keys for metadata are prefixed by an underscore")
     })
