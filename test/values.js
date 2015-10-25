@@ -144,10 +144,17 @@ describe("Reducing GatherContent item JSON to key-value pairs", function () {
                     }
                 },
                 result = hithercontent.reduceItemToKVPairs(sample_data);
-            console.log(result)
             expect(result).to.have.property("First-tab_Text-example")
         })
-        it("where keys for metadata are prefixed by an underscore")
+        it("where keys for metadata are prefixed by an underscore", function () {
+            var sample_data = {
+                    "data": {
+                        "key with several words": ""
+                    }
+                },
+                result = hithercontent.reduceItemToKVPairs(sample_data)
+            expect(result).to.have.all.keys(["_key-with-several-words"])
+        })
     })
 
     describe("should declutter each content field value according to its type", function () {
