@@ -55,7 +55,7 @@ module.exports = (function () {
     if (d.hasOwnProperty("data")) {
         for (k in d.data) {
             if (k !== "config" && d.data.hasOwnProperty(k)) {
-                item["_" + k] = d.data[k]
+                item["_" + k.replace(/\s/g, "-")] = d.data[k]
             }
         }
         if (d.data.hasOwnProperty("config") && Array.isArray(d.data.config)) {
