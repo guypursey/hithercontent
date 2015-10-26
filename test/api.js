@@ -47,7 +47,7 @@ describe("Getting JSON from API", function() {
         });
 
         describe.skip("using an incorrect path", function () {
-            it("should inform the user that an incorrect path has been provided", function (done) {
+            it("should return an empty object", function (done) {
                 hithercontent.getJSONfromAPI("/items/0", function (data) {
                     expect(data).to.be.empty;
                     done();
