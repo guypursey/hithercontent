@@ -28,12 +28,17 @@ var sample_data = {
     						"options": [
     							{
     								"name": "op1a",
-    								"label": "Option 1",
+    								"label": "Option a",
     								"selected": false
     							},
     							{
     								"name": "op1b",
-    								"label": "Option 2",
+    								"label": "Option b",
+    								"selected": true
+    							},
+                                {
+    								"name": "op1c",
+    								"label": "Option c",
     								"selected": true
     							}
     						]
