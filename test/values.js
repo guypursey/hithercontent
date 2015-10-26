@@ -147,18 +147,48 @@ describe("Reducing GatherContent item JSON to key-value pairs", function () {
     })
 
     describe("should declutter each content field value according to its type", function () {
-        it("like the text type which should return as a string")
-        it("like the multiple choice type which should return as an array")
-        it("like the checkboxes type which should return as an array")
-        it("like the section type which should return as an object")
-        it("like the attachment type which should return as a string")
+        it("like the text type which should return as a string", function () {
+            var result = hithercontent.reduceItemToKVPairs(sample_data);
+            expect(result["First-tab_Text-example"]).to.be.a("string");
+        })
+        it("like the multiple choice type which should return as a string", function () {
+            var result = hithercontent.reduceItemToKVPairs(sample_data);
+            expect(result["First-tab_Multiple-choice-example"]).to.be.a("string");
+        })
+        it("like the checkboxes type which should return as an array", function () {
+            var result = hithercontent.reduceItemToKVPairs(sample_data);
+            expect(result["First-tab_Section-example-title"]).to.be.a("string");
+        })
+        it("like the section type which should return as an object", function () {
+            var result = hithercontent.reduceItemToKVPairs(sample_data);
+            expect(result["First-tab_Checkbox-example"]).to.be.an("array");
+        })
+        it("like the attachment type which should return as a string", function () {
+            var result = hithercontent.reduceItemToKVPairs(sample_data);
+            expect(result["First-tab_Attachment-example"]).to.be.a("string");
+        })
     })
 
     describe ("should return each content field value accurately", function () {
-        it("including text values")
-        it("including any selected multiple choice value")
-        it("including any ticked checkbox")
-        it("including section titles and subtitles")
-        it("including attachments")
+        it("including text values", function () {
+            var result = hithercontent.reduceItemToKVPairs(sample_data);
+            expect(result["First-tab_Text-example"]).to.equal("Text example value");
+        })
+        it("including any selected multiple choice value", function () {
+            var result = hithercontent.reduceItemToKVPairs(sample_data);
+            expect(result["First-tab_Multiple-choice-example"]).to.equal("No");
+        })
+        it("including any ticked checkbox", function () {
+            var result = hithercontent.reduceItemToKVPairs(sample_data);
+            expect(result["First-tab_Checkbox-example"]).to.deep.equal(["Option b", "Option c"]);
+        })
+        it("including section titles and subtitles", function () {
+            var result = hithercontent.reduceItemToKVPairs(sample_data);
+            expect(result["Second-tab_Section-example-title"]).to.equal("Section example title Section example subtitle");
+        })
+        it("including attachments", function () {
+            var result = hithercontent.reduceItemToKVPairs(sample_data);
+            expect(result["Second-tab_Attachment-example"]).to.be.a("string");
+        })
     })
 })
