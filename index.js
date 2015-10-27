@@ -1,4 +1,5 @@
-var https = require("https");
+var https = require("https"),
+    isjson = require("is-json");
 
 module.exports = (function () {
 
@@ -35,7 +36,7 @@ module.exports = (function () {
       });
 
       res.on("end", function () {
-        var data = JSON.parse(body);
+        var data = isjson(body) ? JSON.parse(body) : {};
         if (callback && typeof callback === "function") {
           callback(data);
         }
@@ -52,23 +53,29 @@ module.exports = (function () {
   var reduceItemToKVPairs = function (d) {
     var item = {},
         k;
-    for (k in d.data) {
-        if (k !== "config" && d.data.hasOwnProperty(k)) {
-            item["_" + k] = d.data[k]
+    if (d.hasOwnProperty("data")) {
+        for (k in d.data) {
+            if (k !== "config" && d.data.hasOwnProperty(k)) {
+                item["_" + k.replace(/\s/g, "-")] = d.data[k]
+            }
+        }
+        if (d.data.hasOwnProperty("config") && Array.isArray(d.data.config)) {
+            d.data.config.forEach(function (v, i, a) {
+                var tab_label = v.label;
+                v.elements.forEach(function (v, i, a) {
+                    var k = tab_label + "_" + v.label;
+                    k = k && k.replace(/\s/g, "-");
+                    if (v.type === "text") {
+                        item[k] = v.value;
+                    } else if (v.type === "choice_radio") {
+                        item[k] = v.options.filter(v => v.selected).reduce((p, c) => p + c.label, "");
+                    } else if (v.type === "choice_checkbox") {
+                        item[k] = v.options.filter(v => v.selected).map(v => v.label);
+                    }
+                });
+            });
         }
     }
-    d.data.config.forEach(function (v, i, a) {
-      var tab_label = v.label;
-      v.elements.forEach(function (v, i, a) {
-        var k = tab_label + "_" + v.label;
-        k = k && k.replace(/\s/g, "-");
-        if (v.type === "text") {
-          item[k] = v.value;
-        } else if (v.type === "choice_checkbox" || v.type === "choice_radio") {
-          item[k] = v.options.filter(v => v.selected).map(v => v.label);
-        }
-      });
-    });
     return item;
   };
 
