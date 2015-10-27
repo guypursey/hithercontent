@@ -67,7 +67,9 @@ module.exports = (function () {
                     k = k && k.replace(/\s/g, "-");
                     if (v.type === "text") {
                         item[k] = v.value;
-                    } else if (v.type === "choice_checkbox" || v.type === "choice_radio") {
+                    } else if (v.type === "choice_radio") {
+                        item[k] = v.options.filter(v => v.selected).reduce((p, c) => p + c.label, "");
+                    } else if (v.type === "choice_checkbox") {
                         item[k] = v.options.filter(v => v.selected).map(v => v.label);
                     }
                 });
