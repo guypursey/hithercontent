@@ -1,20 +1,27 @@
 {
   "name": "hithercontent",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "A Node.js package for interacting with GatherContent's API.",
   "main": "index.js",
   "repository": "guypursey/hithercontent",
   "engines": {
     "node": ">=4.0.* <=4.2.*"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "chai": "^3.3.0",
+    "mocha": "^2.3.3",
+    "sinon": "^1.17.2"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "keywords": [
     "GatherContent",
     "API"
   ],
   "author": "Guy Pursey <guypursey@gmail.com>",
-  "license": "BSD-2-Clause"
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "is-json": "^1.2.5"
+  }
 }
