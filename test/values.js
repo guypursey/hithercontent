@@ -157,11 +157,11 @@ describe("Reducing GatherContent item JSON to key-value pairs", function () {
         })
         it("like the checkboxes type which should return as an array", function () {
             var result = hithercontent.reduceItemToKVPairs(sample_data);
-            expect(result["First-tab_Section-example-title"]).to.be.a("string");
-        })
-        it("like the section type which should return as an object", function () {
-            var result = hithercontent.reduceItemToKVPairs(sample_data);
             expect(result["First-tab_Checkbox-example"]).to.be.an("array");
+        })
+        it("like the section type which should return as a string", function () {
+            var result = hithercontent.reduceItemToKVPairs(sample_data);
+            expect(result["First-tab_Section-example-example"]).to.be.an("string");
         })
         it("like the attachment type which should return as a string", function () {
             var result = hithercontent.reduceItemToKVPairs(sample_data);
