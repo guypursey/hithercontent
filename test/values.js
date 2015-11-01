@@ -85,7 +85,7 @@ var sample_data = {
     						"type": "section",
     						"name": "el4",
     						"title": "Section example title",
-    						"subtitle": "Section example subtitle"
+    						"subtitle": "<p>Section example subtitle</p>"
     					}
     				]
     			}
@@ -184,7 +184,7 @@ describe("Reducing GatherContent item JSON to key-value pairs", function () {
         })
         it("including section titles and subtitles", function () {
             var result = hithercontent.reduceItemToKVPairs(sample_data);
-            expect(result["Second-tab_Section-example-title"]).to.equal("Section example title Section example subtitle");
+            expect(result["Second-tab_Section-example-title"]).to.equal("<p>Section example subtitle</p>");
         })
         it("including attachments", function () {
             var result = hithercontent.reduceItemToKVPairs(sample_data);
