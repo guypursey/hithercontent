@@ -163,6 +163,7 @@ describe("Reducing GatherContent item JSON to key-value pairs", function () {
             var result = hithercontent.reduceItemToKVPairs(sample_data);
             expect(result["Second-tab_Section-example-title"]).to.be.an("string");
         })
+        it("like the attachment type which should return as a string")
     })
 
     describe ("should return each content field value accurately", function () {
@@ -182,9 +183,6 @@ describe("Reducing GatherContent item JSON to key-value pairs", function () {
             var result = hithercontent.reduceItemToKVPairs(sample_data);
             expect(result["Second-tab_Section-example-title"]).to.equal("<p>Section example subtitle</p>");
         })
-        it("including attachments", function () {
-            var result = hithercontent.reduceItemToKVPairs(sample_data);
-            expect(result["Second-tab_Attachment-example"]).to.be.a("string");
-        })
+        it("including attachments")
     })
 })
