@@ -161,11 +161,7 @@ describe("Reducing GatherContent item JSON to key-value pairs", function () {
         })
         it("like the section type which should return as a string", function () {
             var result = hithercontent.reduceItemToKVPairs(sample_data);
-            expect(result["First-tab_Section-example-example"]).to.be.an("string");
-        })
-        it("like the attachment type which should return as a string", function () {
-            var result = hithercontent.reduceItemToKVPairs(sample_data);
-            expect(result["First-tab_Attachment-example"]).to.be.a("string");
+            expect(result["Second-tab_Section-example-title"]).to.be.an("string");
         })
     })
 
