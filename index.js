@@ -63,7 +63,7 @@ module.exports = (function () {
             d.data.config.forEach(function (v, i, a) {
                 var tab_label = v.label;
                 v.elements.forEach(function (v, i, a) {
-                    var k = tab_label + "_" + v.label;
+                    var k = tab_label + "_" + (v.label || v.title);
                     k = k && k.replace(/\s/g, "-");
                     if (v.type === "text") {
                         item[k] = v.value;
@@ -71,6 +71,8 @@ module.exports = (function () {
                         item[k] = v.options.filter(v => v.selected).reduce((p, c) => p + c.label, "");
                     } else if (v.type === "choice_checkbox") {
                         item[k] = v.options.filter(v => v.selected).map(v => v.label);
+                    } else if (v.type === "section") {
+                        item[k] = v.subtitle;
                     }
                 });
             });
