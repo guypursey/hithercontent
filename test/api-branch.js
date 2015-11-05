@@ -35,4 +35,6 @@ describe("Using the branch selector", function() {
 
     it("should be able to fetch a single branch of the project");
 
+    it("should be able to fetch a single item of the project");
+
 });
