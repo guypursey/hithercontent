@@ -19,7 +19,7 @@ var project_overview = {
     ]
 };
 
-var project_content = [
+var project_content = {
     "1": { "data": { "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
     "2": { "data": { "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
     "1a": { "data": { "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
@@ -27,7 +27,7 @@ var project_content = [
     "2a": { "data": { "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
     "2b": { "data": { "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
     "2b1": { "data": { "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } }
-]
+};
 
 describe("Using the branch selector", function() {
 
