@@ -53,7 +53,28 @@ describe("Using the branch selector", function() {
         https.get.restore();
     });
 
-    it("should be able to fetch the whole project");
+    describe("without specifiying an item id", function() {
+        it("should return an object", function (done) {
+            hithercontent.getProjectBranch("111111", function (branch) {
+                expect(branch).to.be.an("object");
+                done();
+            });
+        });
+
+        it("should return an object with an items property", function (done) {
+            hithercontent.getProjectBranch("111111", function (branch) {
+                expect(branch).to.have.keys("items");
+                done();
+            });
+        });
+
+        it("should return an object with an items property containing only the top-level items", function (done) {
+            hithercontent.getProjectBranch("111111", function (branch) {
+                expect(branch.items).to.have.length(2);
+                done();
+            });
+        });
+    });
 
     it("should be able to fetch a single branch of the project");
 
