@@ -76,8 +76,71 @@ describe("Using the branch selector", function() {
         });
     });
 
-    it("should be able to fetch a single branch of the project");
+    describe("while specifiying an item id", function() {
+        it("should return an object", function (done) {
+            hithercontent.getProjectBranch("111111", "2", function (branch) {
+                expect(branch).to.be.an("object");
+                done();
+            });
+        });
 
-    it("should be able to fetch a single item of the project");
+        it("should return an object with an items property", function (done) {
+            hithercontent.getProjectBranch("111111", "2", function (branch) {
+                expect(branch).to.have.keys("items");
+                done();
+            });
+        });
 
+        it("should return an object with an items property has only one item", function (done) {
+            hithercontent.getProjectBranch("111111", "2", function (branch) {
+                expect(branch.items).to.have.length(1);
+                done();
+            });
+        });
+
+        it("should return an object with an items property whose first item shares the same id as that requested", function (done) {
+            hithercontent.getProjectBranch("111111", "2", function (branch) {
+                expect(branch.items[0]).to.have.property("id", "2");
+                done();
+            });
+        });
+    });
+
+    describe("while specifiying an item that has no children", function() {
+        it("should return an object", function (done) {
+            hithercontent.getProjectBranch("111111", "2b1", function (branch) {
+                expect(branch).to.be.an("object");
+                done();
+            });
+        });
+
+        it("should return an object with an items property", function (done) {
+            hithercontent.getProjectBranch("111111", "2b1", function (branch) {
+                expect(branch).to.have.keys("items");
+                done();
+            });
+        });
+
+        it("should return an object with just one item", function (done) {
+            hithercontent.getProjectBranch("111111", "2b1", function (branch) {
+                expect(branch.items).to.have.length(1);
+                done();
+            });
+        });
+
+        it("should return an object with an items property whose first item shares the same id as that requested", function (done) {
+            hithercontent.getProjectBranch("111111", "2b1", function (branch) {
+                expect(branch.items[0]).to.have.property("id", "2b1");
+                done();
+            });
+        });
+
+        it("should return an object with an items property whose first item does not have an items property of its own", function (done) {
+            hithercontent.getProjectBranch("111111", "2b1", function (branch) {
+                expect(branch.items[0]).to.not.have.property("items");
+                done();
+            });
+        });
+
+    });
 });
