@@ -29,18 +29,25 @@ var project_content = {
     "2b1": { "data": { "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } }
 };
 
-describe("Using the branch selector", function() {
+describe("Using the branch selector", function () {
 
     beforeEach("using mock API to approximate GatherContent", function () {
         this.get = sinon.stub(https, "get", function (options, callback) {
             var request = new PassThrough(),
                 response = new PassThrough(),
-                auth_check = auth.user + ":" + auth.akey;
+                auth_check = auth.user + ":" + auth.akey,
+                path = options.hasOwnProperty("path") && options.path,
+                item_number;
             if (typeof callback === "function") {
                 callback(response);
             }
             if (options.hasOwnProperty("auth") && (options.auth === auth_check)) {
-                response.write(JSON.stringify(options));
+                if (path === "/items?project_id=111111") {
+
+            } else if (item_number = path.match(/\/items\/(.*)/) {
+                if (project_content.hasOwnProperty(item_number[1])) {
+
+                }
             } else {
                 response.write("Invalid credentials.")
             }
