@@ -81,6 +81,29 @@ module.exports = (function () {
     return item;
   };
 
+  var getProjectBranch = function (project_id, item_id, callback) {
+
+      var callback = (typeof callback === "function")
+        ? callback
+        : (typeof item_id === "function")
+            ? item_id
+            : function () {},
+        item_id = typeof item_id === "string" ? item_id : "0",
+        project_id = typeof project_id === "string" ? project_id : "",
+        root = { "items": [] };
+
+      hithercontent.getJSONfromAPI("/items?project_id=" + project_id, function (project_data) {
+
+          var getSubItems = function(root_id) {
+              hithercontent.getJSONfromAPI("/items/" + root_id, function (item_data) {
+                  var subitems = project_data.data
+                    .filter(i => i.parent_id === v.id)
+                    .forEach(i => getSubItems(i.id));
+              });
+          }
+      }
+  };
+
   return {
     init: init,
     getJSONfromAPI: getJSONfromAPI,
