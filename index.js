@@ -94,13 +94,17 @@ module.exports = (function () {
 
       hithercontent.getJSONfromAPI("/items?project_id=" + project_id, function (project_data) {
 
-          var getSubItems = function(root_id) {
+          var getSubItems = function(root_id, item_store) {
               hithercontent.getJSONfromAPI("/items/" + root_id, function (item_data) {
+                  item_store.push(item_data.data);
+                  item_data.data.items = [];
                   var subitems = project_data.data
                     .filter(i => i.parent_id === v.id)
-                    .forEach(i => getSubItems(i.id));
+                    .forEach(i => getSubItems(i.id, item_data.data.items));
               });
-          }
+          };
+
+          getSubItems(item_id, root.items);
       }
   };
 
