@@ -92,10 +92,10 @@ module.exports = (function () {
         project_id = typeof project_id === "string" ? project_id : "",
         root = { "items": [] };
 
-      hithercontent.getJSONfromAPI("/items?project_id=" + project_id, function (project_data) {
+      getJSONfromAPI("/items?project_id=" + project_id, function (project_data) {
 
           var getSubItems = function(root_id, item_store) {
-              hithercontent.getJSONfromAPI("/items/" + root_id, function (item_data) {
+              getJSONfromAPI("/items/" + root_id, function (item_data) {
                   item_store.push(item_data.data);
                   item_data.data.items = [];
                   var subitems = project_data.data
