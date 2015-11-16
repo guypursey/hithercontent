@@ -95,18 +95,21 @@ module.exports = (function () {
 
       getJSONfromAPI("/items?project_id=" + project_id, function (project_data) {
 
-          var getSubItems = function(root_id, item_store) {
+          var getSubItems = function(root_id, item_store, pcb) {
               getJSONfromAPI("/items/" + root_id, function (item_data) {
                   item_store.push(item_data.data);
                   item_data.data.items = [];
                   var subitems = project_data.data
-                    .filter(i => i.parent_id === v.id)
-                    .forEach(i => getSubItems(i.id, item_data.data.items));
+                    .filter(i => i.parent_id === root_id);
+                  async.each(subitems,
+                      (i, cb) => { getSubItems(i.id, item_data.data.items, cb) },
+                      () => { pcb() }
+                  );
               });
           };
 
-          getSubItems(item_id, root.items);
-      }
+          getSubItems(item_id, root.items, () => { callback(root) });
+      });
   };
 
   return {
