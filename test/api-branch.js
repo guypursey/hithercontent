@@ -44,10 +44,11 @@ describe("Using the branch selector", function () {
             if (options.hasOwnProperty("auth") && (options.auth === auth_check)) {
                 if (path === "/items?project_id=111111") {
                     response.write(JSON.stringify(project_overview));
-                }
-            } else if (item_number = path.match(/\/items\/(.*)/)) {
-                if (project_content.hasOwnProperty(item_number[1])) {
-                    response.write(JSON.stringify(project_content[item_number[1]]));
+                } else if (item_number = path.match(/\/items\/(.*)/)) {
+                    console.log("sinon match return for item", item_number);
+                    if (project_content.hasOwnProperty(item_number[1])) {
+                        response.write(JSON.stringify(project_content[item_number[1]]));
+                    }
                 }
             } else {
                 response.write("Invalid credentials.")
