@@ -1,5 +1,6 @@
 var https = require("https"),
-    isjson = require("is-json");
+    isjson = require("is-json"),
+    async = require("async");
 
 module.exports = (function () {
 
