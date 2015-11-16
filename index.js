@@ -116,6 +116,7 @@ module.exports = (function () {
     init: init,
     getJSONfromAPI: getJSONfromAPI,
     reduceItemToKVPairs: reduceItemToKVPairs,
+    getProjectBranch: getProjectBranch
   }
 
 }());
