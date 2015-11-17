@@ -96,16 +96,25 @@ module.exports = (function () {
       getJSONfromAPI("/items?project_id=" + project_id, function (project_data) {
 
           var getSubItems = function(root_id, item_store, pcb) {
-              getJSONfromAPI("/items/" + root_id, function (item_data) {
+              var storeItem = function (item_data) {
                   item_store.push(item_data.data);
                   item_data.data.items = [];
+                  //console.log("item returned by `getSubItems`", root_id, item_data);
                   var subitems = project_data.data
                     .filter(i => i.parent_id === root_id);
                   async.each(subitems,
                       (i, cb) => { getSubItems(i.id, item_data.data.items, cb) },
                       () => { pcb() }
                   );
-              });
+              };
+              if (root_id === "0") {
+                  var zero_item = { "data": { "items": [] } };
+                  root = zero_item.data;
+                  item_store = [];
+                  storeItem(zero_item);
+              } else {
+                  getJSONfromAPI("/items/" + root_id, storeItem);
+              }
           };
 
           getSubItems(item_id, root.items, () => { callback(root) });
