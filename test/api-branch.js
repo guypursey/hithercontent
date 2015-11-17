@@ -20,13 +20,13 @@ var project_overview = {
 };
 
 var project_content = {
-    "1": { "data": { "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
-    "2": { "data": { "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
-    "1a": { "data": { "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
-    "1b": { "data": { "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
-    "2a": { "data": { "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
-    "2b": { "data": { "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
-    "2b1": { "data": { "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } }
+    "1": { "data": { "id": "1", "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
+    "2": { "data": { "id": "2", "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
+    "1a": { "data": { "id": "1a", "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
+    "1b": { "data": { "id": "1b", "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
+    "2a": { "data": { "id": "2a", "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
+    "2b": { "data": { "id": "2b", "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
+    "2b1": { "data": { "id": "2b1", "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } }
 };
 
 describe("Using the branch selector", function () {
@@ -148,9 +148,9 @@ describe("Using the branch selector", function () {
             });
         });
 
-        it("should return an object with an items property whose first item does not have an items property of its own", function (done) {
+        it("should return an object with an items property whose first item has an empty items property of its own", function (done) {
             hithercontent.getProjectBranch("111111", "2b1", function (branch) {
-                expect(branch.items[0]).to.not.have.property("items");
+                expect(branch.items[0].items).to.be.empty;
                 done();
             });
         });
