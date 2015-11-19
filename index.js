@@ -1,5 +1,6 @@
 var https = require("https"),
-    isjson = require("is-json");
+    isjson = require("is-json"),
+    async = require("async");
 
 module.exports = (function () {
 
@@ -81,10 +82,50 @@ module.exports = (function () {
     return item;
   };
 
+  var getProjectBranch = function (project_id, item_id, callback) {
+
+      var callback = (typeof callback === "function")
+        ? callback
+        : (typeof item_id === "function")
+            ? item_id
+            : function () {},
+        item_id = typeof item_id === "string" ? item_id : "0",
+        project_id = typeof project_id === "string" ? project_id : "",
+        root = { "items": [] };
+
+      getJSONfromAPI("/items?project_id=" + project_id, function (project_data) {
+
+          var getSubItems = function(root_id, item_store, pcb) {
+              var storeItem = function (item_data) {
+                  item_store.push(item_data.data);
+                  item_data.data.items = [];
+                  //console.log("item returned by `getSubItems`", root_id, item_data);
+                  var subitems = project_data.data
+                    .filter(i => i.parent_id === root_id);
+                  async.each(subitems,
+                      (i, cb) => { getSubItems(i.id, item_data.data.items, cb) },
+                      () => { pcb() }
+                  );
+              };
+              if (root_id === "0") {
+                  var zero_item = { "data": { "items": [] } };
+                  root = zero_item.data;
+                  item_store = [];
+                  storeItem(zero_item);
+              } else {
+                  getJSONfromAPI("/items/" + root_id, storeItem);
+              }
+          };
+
+          getSubItems(item_id, root.items, () => { callback(root) });
+      });
+  };
+
   return {
     init: init,
     getJSONfromAPI: getJSONfromAPI,
     reduceItemToKVPairs: reduceItemToKVPairs,
+    getProjectBranch: getProjectBranch
   }
 
 }());
