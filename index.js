@@ -87,10 +87,10 @@ module.exports = (function () {
     return item;
   };
 
-  var getProjectBranch = function (project_id, item_id, callback) {
+  var getProjectBranch = function (project_id, item_id, completeBranch) {
 
-      var callback = (typeof callback === "function")
-        ? callback
+      var completeBranch = (typeof completeBranch === "function")
+        ? completeBranch
         : (typeof item_id === "function")
             ? item_id
             : function () {},
@@ -122,7 +122,7 @@ module.exports = (function () {
               }
           };
 
-          getSubItems(item_id, root.items, () => { callback(root) });
+          getSubItems(item_id, root.items, () => { completeBranch(root) });
       });
   };
 
