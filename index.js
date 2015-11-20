@@ -17,6 +17,11 @@ module.exports = (function () {
     }
   }
 
+  var reset = function (cred) {
+      auth = {};
+      init(cred);
+  }
+
   var getJSONfromAPI = function (request, callback) {
 
     var options = {
@@ -123,6 +128,7 @@ module.exports = (function () {
 
   return {
     init: init,
+    reset: reset,
     getJSONfromAPI: getJSONfromAPI,
     reduceItemToKVPairs: reduceItemToKVPairs,
     getProjectBranch: getProjectBranch
