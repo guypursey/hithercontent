@@ -35,6 +35,10 @@ describe("Using the branch selector", function () {
         hithercontent.init(auth);
     });
 
+    after(function() {
+        hithercontent.reset()
+    })
+
     beforeEach("using mock API to approximate GatherContent", function () {
         this.get = sinon.stub(https, "get", function (options, callback) {
             var request = new PassThrough(),
