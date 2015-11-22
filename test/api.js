@@ -10,7 +10,7 @@ var fs = require("fs"),
 describe("Getting JSON from API", function() {
 
     beforeEach("using mock API to approximate GatherContent", function () {
-        this.get = sinon.stub(https, "get", function (options, callback) {
+        sinon.stub(https, "get", function (options, callback) {
             var request = new PassThrough(),
                 response = new PassThrough(),
                 auth_check = auth.user + ":" + auth.akey;
