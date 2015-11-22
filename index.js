@@ -87,15 +87,24 @@ module.exports = (function () {
     return item;
   };
 
-  var getProjectBranch = function (project_id, item_id, completeBranch) {
+  var getProjectBranch = function (project_id, item_id, actOnItem, completeBranch) {
 
       var completeBranch = (typeof completeBranch === "function")
         ? completeBranch
-        : (typeof item_id === "function")
-            ? item_id
-            : function () {},
-        item_id = typeof item_id === "string" ? item_id : "0",
-        project_id = typeof project_id === "string" ? project_id : "",
+        : (typeof actOnItem === "function")
+            ? actOnItem
+            : (typeof item_id === "function")
+                ? item_id
+                : function () {},
+        actOnItem = (typeof completeBranch === "function")
+            ? (typeof actOnItem === "function")
+                ? actOnItem
+                : function () {}
+            : (typeof item_id === "function")
+                ? item_id
+                : function () {},
+        item_id = (typeof item_id === "string") ? item_id : "0",
+        project_id = (typeof project_id === "string") ? project_id : "",
         root = { "items": [] };
 
       getJSONfromAPI("/items?project_id=" + project_id, function (project_data) {
