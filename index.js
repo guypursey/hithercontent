@@ -112,14 +112,14 @@ module.exports = (function () {
       getJSONfromAPI("/items?project_id=" + project_id, function (project_data) {
 
           var getSubItems = function(root_id, item_store, pcb) {
-              var storeItem = function (item_data) {
-                  item_store.push(item_data.data);
-                  item_data.data.items = [];
-                  //console.log("item returned by `getSubItems`", root_id, item_data);
+              var storeItem = function (item) {
+                  var item_data = actOnItem(item);
+                  item_store.push(item_data);
+                  item_data.items = [];
                   var subitems = project_data.data
                     .filter(i => i.parent_id === root_id);
                   async.each(subitems,
-                      (i, cb) => { getSubItems(i.id, item_data.data.items, cb) },
+                      (i, cb) => { getSubItems(i.id, item_data.items, cb) },
                       () => { pcb() }
                   );
               };
