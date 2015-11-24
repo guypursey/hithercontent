@@ -9,24 +9,24 @@ var fs = require("fs"),
 
 var project_overview = {
     "data": [
-        { "id": "1", "parent_id": "0" },
-        { "id": "2", "parent_id": "0" },
-        { "id": "1a", "parent_id": "1" },
-        { "id": "1b", "parent_id": "1" },
-        { "id": "2a", "parent_id": "2" },
-        { "id": "2b", "parent_id": "2" },
-        { "id": "2b1", "parent_id": "2b" }
+        { "id": 1, "parent_id": 0 },
+        { "id": 2, "parent_id": 0 },
+        { "id": 11, "parent_id": 1 },
+        { "id": 12, "parent_id": 1 },
+        { "id": 21, "parent_id": 2 },
+        { "id": 22, "parent_id": 2 },
+        { "id": 221, "parent_id": 22 }
     ]
 };
 
 var project_content = {
-    "1": { "data": { "id": "1", "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
-    "2": { "data": { "id": "2", "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
-    "1a": { "data": { "id": "1a", "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
-    "1b": { "data": { "id": "1b", "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
-    "2a": { "data": { "id": "2a", "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
-    "2b": { "data": { "id": "2b", "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
-    "2b1": { "data": { "id": "2b1", "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } }
+    "1": { "data": { "id": 1, "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
+    "2": { "data": { "id": 2, "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
+    "11": { "data": { "id": 11, "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
+    "12": { "data": { "id": 12, "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
+    "21": { "data": { "id": 21, "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
+    "22": { "data": { "id": 22, "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
+    "221": { "data": { "id": 221, "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } }
 };
 
 describe("Using the branch selector", function () {
@@ -71,21 +71,21 @@ describe("Using the branch selector", function () {
 
     describe("without specifiying an item id", function() {
         it("should return an object", function (done) {
-            hithercontent.getProjectBranch("111111", function (branch) {
+            hithercontent.getProjectBranch(111111, function (branch) {
                 expect(branch).to.be.an("object");
                 done();
             });
         });
 
         it("should return an object with an items property", function (done) {
-            hithercontent.getProjectBranch("111111", function (branch) {
+            hithercontent.getProjectBranch(111111, function (branch) {
                 expect(branch).to.have.keys("items");
                 done();
             });
         });
 
         it("should return an object with an items property containing only the top-level items", function (done) {
-            hithercontent.getProjectBranch("111111", function (branch) {
+            hithercontent.getProjectBranch(111111, function (branch) {
                 expect(branch.items).to.have.length(2);
                 done();
             });
@@ -94,29 +94,29 @@ describe("Using the branch selector", function () {
 
     describe("while specifiying an item id", function() {
         it("should return an object", function (done) {
-            hithercontent.getProjectBranch("111111", "2", function (branch) {
+            hithercontent.getProjectBranch(111111, 2, function (branch) {
                 expect(branch).to.be.an("object");
                 done();
             });
         });
 
         it("should return an object with an items property", function (done) {
-            hithercontent.getProjectBranch("111111", "2", function (branch) {
+            hithercontent.getProjectBranch(111111, 2, function (branch) {
                 expect(branch).to.have.keys("items");
                 done();
             });
         });
 
         it("should return an object with an items property has only one item", function (done) {
-            hithercontent.getProjectBranch("111111", "2", function (branch) {
+            hithercontent.getProjectBranch(111111, 2, function (branch) {
                 expect(branch.items).to.have.length(1);
                 done();
             });
         });
 
         it("should return an object with an items property whose first item shares the same id as that requested", function (done) {
-            hithercontent.getProjectBranch("111111", "2", function (branch) {
-                expect(branch.items[0]).to.have.property("id", "2");
+            hithercontent.getProjectBranch(111111, 2, function (branch) {
+                expect(branch.items[0]).to.have.property("id", 2);
                 done();
             });
         });
@@ -124,35 +124,35 @@ describe("Using the branch selector", function () {
 
     describe("while specifiying an item that has no children", function() {
         it("should return an object", function (done) {
-            hithercontent.getProjectBranch("111111", "2b1", function (branch) {
+            hithercontent.getProjectBranch(111111, 221, function (branch) {
                 expect(branch).to.be.an("object");
                 done();
             });
         });
 
         it("should return an object with an items property", function (done) {
-            hithercontent.getProjectBranch("111111", "2b1", function (branch) {
+            hithercontent.getProjectBranch(111111, 221, function (branch) {
                 expect(branch).to.have.keys("items");
                 done();
             });
         });
 
         it("should return an object with just one item", function (done) {
-            hithercontent.getProjectBranch("111111", "2b1", function (branch) {
+            hithercontent.getProjectBranch(111111, 221, function (branch) {
                 expect(branch.items).to.have.length(1);
                 done();
             });
         });
 
         it("should return an object with an items property whose first item shares the same id as that requested", function (done) {
-            hithercontent.getProjectBranch("111111", "2b1", function (branch) {
-                expect(branch.items[0]).to.have.property("id", "2b1");
+            hithercontent.getProjectBranch(111111, 221, function (branch) {
+                expect(branch.items[0]).to.have.property("id", 221);
                 done();
             });
         });
 
         it("should return an object with an items property whose first item has an empty items property of its own", function (done) {
-            hithercontent.getProjectBranch("111111", "2b1", function (branch) {
+            hithercontent.getProjectBranch(111111, 221, function (branch) {
                 expect(branch.items[0].items).to.be.empty;
                 done();
             });

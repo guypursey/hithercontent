@@ -87,24 +87,26 @@ module.exports = (function () {
     return item;
   };
 
-  var getProjectBranch = function (project_id, item_id, actOnItem, completeBranch) {
+  var getProjectBranch = function (project_id, item_id, aOI, cB) {
 
-      var completeBranch = (typeof completeBranch === "function")
-        ? completeBranch
-        : (typeof actOnItem === "function")
-            ? actOnItem
+      var completeBranch = (typeof cB === "function")
+        ? cB
+        : (typeof aOI === "function")
+            ? aOI
             : (typeof item_id === "function")
                 ? item_id
-                : function () {},
-        actOnItem = (typeof completeBranch === "function")
-            ? (typeof actOnItem === "function")
-                ? actOnItem
-                : function () {}
-            : (typeof item_id === "function")
-                ? item_id
-                : function () {},
-        item_id = (typeof item_id === "string") ? item_id : "0",
-        project_id = (typeof project_id === "string") ? project_id : "",
+                : () => {},
+        actOnItem = (typeof cB === "function")
+            ? (typeof aOI === "function")
+                ? aOI
+                : i => i.data
+            : (typeof aOI === "function")
+                ? (typeof item_id === "function")
+                    ? item_id
+                    : i => i.data
+                : i => i.data,
+        item_id = (typeof item_id === "number") ? item_id : 0,
+        project_id = (typeof project_id === "number") ? project_id : 0,
         root = { "items": [] };
 
       getJSONfromAPI("/items?project_id=" + project_id, function (project_data) {
@@ -121,7 +123,7 @@ module.exports = (function () {
                       () => { pcb() }
                   );
               };
-              if (root_id === "0") {
+              if (root_id === 0) {
                   var zero_item = { "data": { "items": [] } };
                   root = zero_item.data;
                   item_store = [];
