@@ -90,6 +90,30 @@ describe("Using the branch selector", function () {
                 done();
             });
         });
+
+        describe("but with the `reduceItemToKVPairs` function acting on each item", function () {
+            it("should return an object", function (done) {
+                hithercontent.getProjectBranch(111111, hithercontent.reduceItemToKVPairs, function (branch) {
+                    expect(branch).to.be.an("object");
+                    done();
+                });
+            });
+
+            it("should return an object with an items property", function (done) {
+                hithercontent.getProjectBranch(111111, hithercontent.reduceItemToKVPairs, function (branch) {
+                    expect(branch).to.have.keys("items");
+                    done();
+                });
+            });
+
+            it("should return an object with an items property containing only the top-level items", function (done) {
+                hithercontent.getProjectBranch(111111, hithercontent.reduceItemToKVPairs, function (branch) {
+                    console.log(branch)
+                    expect(branch.items).to.have.length(2);
+                    done();
+                });
+            });
+        });
     });
 
     describe("while specifiying an item id", function() {
