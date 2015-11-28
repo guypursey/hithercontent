@@ -87,6 +87,35 @@ module.exports = (function () {
     return item;
   };
 
+  var flattenItemData = function (d) {
+      var item = {},
+          k;
+      for (k in d) {
+          if (k !== "config" && d.hasOwnProperty(k)) {
+              item["_" + k.replace(/\s/g, "-")] = d[k]
+          }
+      }
+      if (d.hasOwnProperty("config") && Array.isArray(d.config)) {
+          d.config.forEach(function (v, i, a) {
+              var tab_label = v.label;
+              v.elements.forEach(function (v, i, a) {
+                  var k = tab_label + "_" + (v.label || v.title);
+                  k = k && k.replace(/\s/g, "-");
+                  if (v.type === "text") {
+                      item[k] = v.value;
+                  } else if (v.type === "choice_radio") {
+                      item[k] = v.options.filter(v => v.selected).reduce((p, c) => p + c.label, "");
+                  } else if (v.type === "choice_checkbox") {
+                      item[k] = v.options.filter(v => v.selected).map(v => v.label);
+                  } else if (v.type === "section") {
+                      item[k] = v.subtitle;
+                  }
+              });
+          });
+      }
+      return item;
+  }
+
   var getProjectBranch = function (project_id, item_id, aOI, cB) {
 
       var completeBranch = (typeof cB === "function")
