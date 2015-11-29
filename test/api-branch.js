@@ -108,7 +108,6 @@ describe("Using the branch selector", function () {
 
             it("should return an object with an items property containing only the top-level items", function (done) {
                 hithercontent.getProjectBranch(111111, hithercontent.reduceItemToKVPairs, function (branch) {
-                    console.log(branch)
                     expect(branch.items).to.have.length(2);
                     done();
                 });
