@@ -55,9 +55,10 @@ Nothing. Acts asynchronously using the `callback` argument.
 
 #### Arguments
 
- - `project`: *String.* **Required.** The project ID for the project you want to fetch from.
- - `item`: *String.* **Optional.** The item ID for the branch you want to fetch. This will then get any items below this in the structure. If omitted, the whole project will be fetched.
- - `callback`: *Function.* **Required.** Should have one argument, which represents the data that you expect to receive, as an object. You can use this function to act on the data asynchronously.
+ - `project_id`: *String.* **Required.** The project ID for the project you want to fetch from.
+ - `item_id`: *String.* **Optional.** The item ID for the branch you want to fetch. This will then get any items below this in the structure. If omitted, the whole project will be fetched.
+ - `actOnItem`: *Function.* **Optional.** Should have one argument, which represents the item data that you expect to receive.
+ - `completeBranch`: *Function.* **Required.** Should have one argument, which represents the data that you expect to receive, as an object. You can use this function to act on the data asynchronously.
 
 #### Returns
 
