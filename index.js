@@ -119,14 +119,12 @@ module.exports = (function () {
               var storeItem = function (item) {
                       var item_data = item.data = actOnItem(item);
                       item_store.push(item_data);
-                      item_data.items = [];
                       return item_data;
                   },
                   getChildItems = function (item_data) {
                       var subitems = project_data.data
                         .filter(i => i.parent_id === root_id);
-                        console.log("acted on", item_data)
-                        //console.log("subitems", subitems);
+                      if (subitems.length) { item_data.items = [] }
                       async.each(subitems,
                           (i, cb) => { getSubItems(i.id, item_data.items, cb) },
                           () => { pcb() }
