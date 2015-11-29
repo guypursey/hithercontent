@@ -131,10 +131,7 @@ module.exports = (function () {
                       );
                   };
               if (root_id === 0) {
-                  var zero_item = { "data": { "items": [] } };
-                  root = zero_item.data;
-                  item_store = [];
-                  getChildItems(storeItem(zero_item));
+                  getChildItems(root);
               } else {
                   getJSONfromAPI("/items/" + root_id, item => getChildItems(storeItem(item)));
               }
