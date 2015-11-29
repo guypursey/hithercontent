@@ -57,34 +57,9 @@ module.exports = (function () {
   };
 
   var reduceItemToKVPairs = function (d) {
-    var item = {},
-        k;
-    if (d.hasOwnProperty("data")) {
-        for (k in d.data) {
-            if (k !== "config" && d.data.hasOwnProperty(k)) {
-                item["_" + k.replace(/\s/g, "-")] = d.data[k]
-            }
-        }
-        if (d.data.hasOwnProperty("config") && Array.isArray(d.data.config)) {
-            d.data.config.forEach(function (v, i, a) {
-                var tab_label = v.label;
-                v.elements.forEach(function (v, i, a) {
-                    var k = tab_label + "_" + (v.label || v.title);
-                    k = k && k.replace(/\s/g, "-");
-                    if (v.type === "text") {
-                        item[k] = v.value;
-                    } else if (v.type === "choice_radio") {
-                        item[k] = v.options.filter(v => v.selected).reduce((p, c) => p + c.label, "");
-                    } else if (v.type === "choice_checkbox") {
-                        item[k] = v.options.filter(v => v.selected).map(v => v.label);
-                    } else if (v.type === "section") {
-                        item[k] = v.subtitle;
-                    }
-                });
-            });
-        }
-    }
-    return item;
+    return d.hasOwnProperty("data") && typeof d.data === "object"
+        ? flattenItemData(d.data)
+        : {}
   };
 
   var flattenItemData = function (d) {
