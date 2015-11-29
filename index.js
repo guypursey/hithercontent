@@ -117,23 +117,28 @@ module.exports = (function () {
 
           var getSubItems = function(root_id, item_store, pcb) {
               var storeItem = function (item) {
-                  var item_data = actOnItem(item);
-                  item_store.push(item_data);
-                  item_data.items = [];
-                  var subitems = project_data.data
-                    .filter(i => i.parent_id === root_id);
-                  async.each(subitems,
-                      (i, cb) => { getSubItems(i.id, item_data.items, cb) },
-                      () => { pcb() }
-                  );
-              };
+                      var item_data = item.data = actOnItem(item);
+                      item_store.push(item_data);
+                      item_data.items = [];
+                      return item_data;
+                  },
+                  getChildItems = function (item_data) {
+                      var subitems = project_data.data
+                        .filter(i => i.parent_id === root_id);
+                        console.log("acted on", item_data)
+                        //console.log("subitems", subitems);
+                      async.each(subitems,
+                          (i, cb) => { getSubItems(i.id, item_data.items, cb) },
+                          () => { pcb() }
+                      );
+                  };
               if (root_id === 0) {
                   var zero_item = { "data": { "items": [] } };
                   root = zero_item.data;
                   item_store = [];
-                  storeItem(zero_item);
+                  getChildItems(storeItem(zero_item));
               } else {
-                  getJSONfromAPI("/items/" + root_id, storeItem);
+                  getJSONfromAPI("/items/" + root_id, item => getChildItems(storeItem(item)));
               }
           };
 
