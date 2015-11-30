@@ -143,6 +143,36 @@ describe("Using the branch selector", function () {
                 done();
             });
         });
+
+        describe("but with the `reduceItemToKVPairs` function acting on each item", function () {
+            it("should return an object", function (done) {
+                hithercontent.getProjectBranch(111111, 2, hithercontent.reduceItemToKVPairs, function (branch) {
+                    expect(branch).to.be.an("object");
+                    done();
+                });
+            });
+
+            it("should return an object with an items property", function (done) {
+                hithercontent.getProjectBranch(111111, 2, hithercontent.reduceItemToKVPairs, function (branch) {
+                    expect(branch).to.have.keys("items");
+                    done();
+                });
+            });
+
+            it("should return an object with an items property has only one item", function (done) {
+                hithercontent.getProjectBranch(111111, 2, hithercontent.reduceItemToKVPairs, function (branch) {
+                    expect(branch.items).to.have.length(1);
+                    done();
+                });
+            });
+
+            it("should return an object with an items property whose first item shares the same id as that requested", function (done) {
+                hithercontent.getProjectBranch(111111, 2, hithercontent.reduceItemToKVPairs, function (branch) {
+                    expect(branch.items[0]).to.have.property("_id", 2);
+                    done();
+                });
+            });
+        });
     });
 
     describe("while specifiying an item that has no children", function() {
@@ -181,5 +211,41 @@ describe("Using the branch selector", function () {
             });
         });
 
+        describe("but with `reduceItemToKVPairs` function acting on each item", function () {
+            it("should return an object", function (done) {
+                hithercontent.getProjectBranch(111111, 221, hithercontent.reduceItemToKVPairs, function (branch) {
+                    expect(branch).to.be.an("object");
+                    done();
+                });
+            });
+
+            it("should return an object with an items property", function (done) {
+                hithercontent.getProjectBranch(111111, 221, hithercontent.reduceItemToKVPairs, function (branch) {
+                    expect(branch).to.have.keys("items");
+                    done();
+                });
+            });
+
+            it("should return an object with just one item", function (done) {
+                hithercontent.getProjectBranch(111111, 221, hithercontent.reduceItemToKVPairs, function (branch) {
+                    expect(branch.items).to.have.length(1);
+                    done();
+                });
+            });
+
+            it("should return an object with an items property whose first item shares the same id as that requested", function (done) {
+                hithercontent.getProjectBranch(111111, 221, hithercontent.reduceItemToKVPairs, function (branch) {
+                    expect(branch.items[0]).to.have.property("_id", 221);
+                    done();
+                });
+            });
+
+            it("should return an object with an items property whose first item has an empty items property of its own", function (done) {
+                hithercontent.getProjectBranch(111111, 221, hithercontent.reduceItemToKVPairs, function (branch) {
+                    expect(branch.items[0]).to.not.have.property("items");
+                    done();
+                });
+            });
+        });
     });
 });
