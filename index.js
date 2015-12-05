@@ -121,7 +121,7 @@ module.exports = (function () {
                       item_store.push(item_data);
                       return item_data;
                   },
-                  getChildItems = function (item_data) {
+                  findSubItems = function (item_data) {
                       var subitems = project_data.data
                         .filter(i => i.parent_id === root_id);
                       if (subitems.length) { item_data.items = [] }
@@ -131,9 +131,9 @@ module.exports = (function () {
                       );
                   };
               if (root_id === 0) {
-                  getChildItems(root);
+                  findSubItems(root);
               } else {
-                  getJSONfromAPI("/items/" + root_id, item => getChildItems(storeItem(item)));
+                  getJSONfromAPI("/items/" + root_id, item => findSubItems(storeItem(item)));
               }
           };
 
