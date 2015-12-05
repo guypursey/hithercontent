@@ -117,7 +117,7 @@ module.exports = (function () {
 
           var getSubItems = function (root_id, item_store, pcb) {
               var storeItem = function (item) {
-                      var item_data = item.data = actOnItem(item);
+                      var item_data = actOnItem(item);
                       item_store.push(item_data);
                       return item_data;
                   },
