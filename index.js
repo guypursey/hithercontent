@@ -115,29 +115,29 @@ module.exports = (function () {
 
       getJSONfromAPI("/items?project_id=" + project_id, function (project_data) {
 
-          var getSubItems = function (root_id, item_store, pcb) {
+          var getChildItems = function (root_id, item_store, pcb) {
               var storeItem = function (item) {
                       var item_data = actOnItem(item);
                       item_store.push(item_data);
                       return item_data;
                   },
-                  findSubItems = function (item_data) {
+                  findChildItems = function (item_data) {
                       var subitems = project_data.data
                         .filter(i => i.parent_id === root_id);
                       if (subitems.length) { item_data.items = [] }
                       async.each(subitems,
-                          (i, cb) => { getSubItems(i.id, item_data.items, cb) },
+                          (i, cb) => { getChildItems(i.id, item_data.items, cb) },
                           () => { pcb() }
                       );
                   };
               if (root_id === 0) {
-                  findSubItems(root);
+                  findChildItems(root);
               } else {
-                  getJSONfromAPI("/items/" + root_id, item => findSubItems(storeItem(item)));
+                  getJSONfromAPI("/items/" + root_id, item => findChildItems(storeItem(item)));
               }
           };
 
-          getSubItems(item_id, root.items, () => { completeBranch(root) });
+          getChildItems(item_id, root.items, () => { completeBranch(root) });
       });
   };
 
