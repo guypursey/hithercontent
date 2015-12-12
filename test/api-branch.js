@@ -13,6 +13,9 @@ var project_overview = {
         { "id": 2, "parent_id": 0 },
         { "id": 11, "parent_id": 1 },
         { "id": 12, "parent_id": 1 },
+        { "id": 121, "parent_id": 12 },
+        { "id": 122, "parent_id": 12 },
+        { "id": 123, "parent_id": 12 },
         { "id": 21, "parent_id": 2 },
         { "id": 22, "parent_id": 2 },
         { "id": 221, "parent_id": 22 }
@@ -20,13 +23,16 @@ var project_overview = {
 };
 
 var project_content = {
-    "1": { "data": { "id": 1, "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
-    "2": { "data": { "id": 2, "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
-    "11": { "data": { "id": 11, "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
-    "12": { "data": { "id": 12, "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
-    "21": { "data": { "id": 21, "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
-    "22": { "data": { "id": 22, "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
-    "221": { "data": { "id": 221, "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } }
+    "1": { "data": { "id": 1, "position": "1", "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
+    "2": { "data": { "id": 2, "position": "4", "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
+    "11": { "data": { "id": 11, "position": "2", "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
+    "12": { "data": { "id": 12, "position": "3", "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
+    "121": { "data": { "id": 121, "position": "7", "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
+    "122": { "data": { "id": 122, "position": "6", "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
+    "123": { "data": { "id": 123, "position": "5", "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
+    "21": { "data": { "id": 21, "position": "8", "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
+    "22": { "data": { "id": 22, "position": "9", "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
+    "221": { "data": { "id": 221, "position": "10", "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } }
 };
 
 describe("Using the branch selector", function () {
