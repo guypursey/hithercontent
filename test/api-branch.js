@@ -134,6 +134,17 @@ describe("Using the branch selector", function () {
             });
         });
 
+        it("should return an object with ordering of items according to positioning", function (done) {
+            hithercontent.getProjectBranch(111111, function (branch) {
+                expect(branch.items[0].items[1].items).to.eql([
+                    { "id": 123, "position": "5", "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] },
+                    { "id": 122, "position": "6", "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] },
+                    { "id": 121, "position": "7", "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] }
+                ]);
+                done();
+            });
+        });
+
         describe("but with an identity function acting on each item", function () {
             it("should return an object", function (done) {
                 hithercontent.getProjectBranch(111111, i => i, function (branch) {
