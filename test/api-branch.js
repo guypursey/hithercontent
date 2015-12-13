@@ -97,6 +97,43 @@ describe("Using the branch selector", function () {
             });
         });
 
+        it("should return an object with the first item having an id of '1'", function (done) {
+            hithercontent.getProjectBranch(111111, function (branch) {
+                expect(branch.items[0]).to.have.property("id", 1);
+                done();
+            });
+        });
+
+        it("should return an object with the first item having the two child items as specified", function (done) {
+            hithercontent.getProjectBranch(111111, function (branch) {
+                expect(branch.items[0].items).to.have.length(2);
+                done();
+            });
+        });
+
+
+        it("should return an object with the first item's first child item having an id of '11'", function (done) {
+            hithercontent.getProjectBranch(111111, function (branch) {
+                expect(branch.items[0].items[0]).to.have.property("id", 11);
+                done();
+            });
+        });
+
+
+        it("should return an object with the first item's second child item having an id of '12'", function (done) {
+            hithercontent.getProjectBranch(111111, function (branch) {
+                expect(branch.items[0].items[1]).to.have.property("id", 12);
+                done();
+            });
+        });
+
+        it("should return an object with the first item's second child having correct number of child items", function (done) {
+            hithercontent.getProjectBranch(111111, function (branch) {
+                expect(branch.items[0].items[1].items).to.have.length(3);
+                done();
+            });
+        });
+
         describe("but with an identity function acting on each item", function () {
             it("should return an object", function (done) {
                 hithercontent.getProjectBranch(111111, i => i, function (branch) {
