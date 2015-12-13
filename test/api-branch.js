@@ -238,6 +238,20 @@ describe("Using the branch selector", function () {
             });
         });
 
+        it("should return an object whose item has the correct first child item (e.g., 21)", function (done) {
+            hithercontent.getProjectBranch(111111, 2, function (branch) {
+                expect(branch.items[0].items[0]).to.have.property("id", 21);
+                done();
+            });
+        });
+
+        it("should return an object whose item has the correct second child item (e.g., 22)", function (done) {
+            hithercontent.getProjectBranch(111111, 2, function (branch) {
+                expect(branch.items[0].items[1]).to.have.property("id", 22);
+                done();
+            });
+        });
+
         describe("but with an identity function acting on each item", function () {
             it("should return an object", function (done) {
                 hithercontent.getProjectBranch(111111, 2, i => i, function (branch) {
