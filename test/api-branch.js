@@ -181,14 +181,14 @@ describe("Using the branch selector", function () {
                 });
             });
 
-            it("should return an object with an items property whose first item shares the same id as that requested", function (done) {
+            it("should return an object with an items property whose first item is the first top-level item", function (done) {
                 hithercontent.getProjectBranch(111111, i => i, function (branch) {
                     expect(branch.items[0].data).to.have.property("id", 1);
                     done();
                 });
             });
 
-            it("should return an object with an items property whose first item shares the same id as that requested", function (done) {
+            it("should return an object with an items property whose first item has the config property", function (done) {
                 hithercontent.getProjectBranch(111111, i => i, function (branch) {
                     expect(branch.items[0].data).to.have.property("config");
                     done();
