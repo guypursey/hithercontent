@@ -127,7 +127,10 @@ module.exports = (function () {
                       if (subitems.length) { item_data.items = [] }
                       async.each(subitems,
                           (i, cb) => { getChildItems(i.id, item_data.items, cb) },
-                          () => { pcb() }
+                          () => {
+                              item_store.sort((a, b) => parseInt(a.position, 10) - parseInt(b.position, 10))
+                              pcb()
+                          }
                       );
                   };
               if (root_id === 0) {
