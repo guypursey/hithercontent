@@ -202,10 +202,16 @@ describe("Using the branch selector", function () {
                 });
             });
 
+            it("should return an object with the first item's child having a data property", function (done) {
+                hithercontent.getProjectBranch(111111, i => i, function (branch) {
+                    expect(branch.items[0].items[0]).to.have.property("data");
+                    done();
+                });
+            });
 
             it("should return an object with the first item's first child item having an id of '11'", function (done) {
                 hithercontent.getProjectBranch(111111, i => i, function (branch) {
-                    expect(branch.items[0].items[0]).to.have.property("id", 11);
+                    expect(branch.items[0].items[0].data).to.have.property("id", 11);
                     done();
                 });
             });
@@ -213,7 +219,7 @@ describe("Using the branch selector", function () {
 
             it("should return an object with the first item's second child item having an id of '12'", function (done) {
                 hithercontent.getProjectBranch(111111, i => i, function (branch) {
-                    expect(branch.items[0].items[1]).to.have.property("id", 12);
+                    expect(branch.items[0].items[1].data).to.have.property("id", 12);
                     done();
                 });
             });
@@ -228,9 +234,9 @@ describe("Using the branch selector", function () {
             it("should return an object with ordering of items according to positioning", function (done) {
                 hithercontent.getProjectBranch(111111, i => i, function (branch) {
                     expect(branch.items[0].items[1].items).to.eql([
-                        { "id": 123, "position": "5", "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] },
-                        { "id": 122, "position": "6", "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] },
-                        { "id": 121, "position": "7", "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] }
+                        { "data": { "id": 123, "position": "5", "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
+                        { "data": { "id": 122, "position": "6", "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
+                        { "data": { "id": 121, "position": "7", "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } }
                     ]);
                     done();
                 });
