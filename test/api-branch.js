@@ -276,7 +276,7 @@ describe("Using the branch selector", function () {
 
             it("should return an object with the first item's first child item having an id of '11'", function (done) {
                 hithercontent.getProjectBranch(111111, hithercontent.reduceItemToKVPairs, function (branch) {
-                    expect(branch.items[0].items[0]).to.have.property("id", 11);
+                    expect(branch.items[0].items[0]).to.have.property("_id", 11);
                     done();
                 });
             });
@@ -284,7 +284,7 @@ describe("Using the branch selector", function () {
 
             it("should return an object with the first item's second child item having an id of '12'", function (done) {
                 hithercontent.getProjectBranch(111111, hithercontent.reduceItemToKVPairs, function (branch) {
-                    expect(branch.items[0].items[1]).to.have.property("id", 12);
+                    expect(branch.items[0].items[1]).to.have.property("_id", 12);
                     done();
                 });
             });
