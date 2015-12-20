@@ -115,7 +115,7 @@ module.exports = (function () {
 
       getJSONfromAPI("/items?project_id=" + project_id, function (project_data) {
 
-          var getItem = function (root_id, siblings_store, pcb) {
+          var getItem = function (root_id, siblings_store, finishItem) {
               var storeItem = function (item) {
                       var item_data = actOnItem(item);
                       siblings_store.push(item_data);
@@ -126,11 +126,13 @@ module.exports = (function () {
                         .filter(i => i.parent_id === root_id);
                       if (subitems.length) { item_data.items = [] }
                       async.each(subitems,
-                          (i, cb) => { getItem(i.id, item_data.items, cb) },
+                          (i, finishChild) => {
+                              getItem(i.id, item_data.items, finishChild)
+                          },
                           () => {
                               item_data.items
                                 .sort((a, b) => parseInt(a.position, 10) - parseInt(b.position, 10))
-                              pcb()
+                              finishItem()
                           }
                       );
                   };
