@@ -100,7 +100,7 @@ module.exports = (function () {
             : (typeof item_id === "function")
                 ? item_id
                 : () => {},
-        actOnItem = (typeof cB === "function")
+        processItem = (typeof cB === "function")
             ? (typeof aOI === "function")
                 ? aOI
                 : i => i.data
@@ -117,7 +117,7 @@ module.exports = (function () {
 
           var getItem = function (root_id, siblings_store, finishItem) {
               var storeItem = function (item) {
-                      var item_data = actOnItem(item);
+                      var item_data = processItem(item);
                       siblings_store.push(item_data);
                       return item_data;
                   },
