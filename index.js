@@ -93,7 +93,7 @@ module.exports = (function () {
 
   var getProjectBranch = function (project_id, item_id, aOI, cB) {
 
-      var completeBranch = (typeof cB === "function")
+      var finishBranch = (typeof cB === "function")
         ? cB
         : (typeof aOI === "function")
             ? aOI
@@ -143,7 +143,7 @@ module.exports = (function () {
               }
           };
 
-          getItem(item_id, root.items, () => { completeBranch(root) });
+          getItem(item_id, root.items, () => { finishBranch(root) });
       });
   };
 
