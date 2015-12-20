@@ -91,20 +91,20 @@ module.exports = (function () {
       return item;
   }
 
-  var getProjectBranch = function (project_id, item_id, aOI, cB) {
+  var getProjectBranch = function (project_id, item_id, iterator, callback) {
 
-      var finishBranch = (typeof cB === "function")
-        ? cB
-        : (typeof aOI === "function")
-            ? aOI
+      var finishBranch = (typeof callback === "function")
+        ? callback
+        : (typeof iterator === "function")
+            ? iterator
             : (typeof item_id === "function")
                 ? item_id
                 : () => {},
-        processItem = (typeof cB === "function")
-            ? (typeof aOI === "function")
-                ? aOI
+        processItem = (typeof callback === "function")
+            ? (typeof iterator === "function")
+                ? iterator
                 : i => i.data
-            : (typeof aOI === "function")
+            : (typeof iterator === "function")
                 ? (typeof item_id === "function")
                     ? item_id
                     : i => i.data
