@@ -124,7 +124,7 @@ module.exports = (function () {
                   findChildItems = function (item_data) {
                       var subitems = project_data.data
                         .filter(i => i.parent_id === root_id);
-                      if (subitems.length) { item_data.items = [] }
+                      item_data.items = []
                       async.each(subitems,
                           (i, finishChild) => {
                               getItem(i.id, item_data.items, finishChild)
