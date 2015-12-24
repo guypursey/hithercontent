@@ -122,10 +122,10 @@ module.exports = (function () {
                       return item_data;
                   },
                   findChildItems = function (item_data) {
-                      var subitems = project_data.data
+                      var child_items = project_data.data
                         .filter(i => i.parent_id === root_id);
                       item_data.items = []
-                      async.each(subitems,
+                      async.each(child_items,
                           (i, finishChild) => {
                               getItem(i.id, item_data.items, finishChild)
                           },
