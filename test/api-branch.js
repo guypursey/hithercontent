@@ -137,9 +137,9 @@ describe("Using the branch selector", function () {
         it("should return an object with ordering of items according to positioning", function (done) {
             hithercontent.getProjectBranch(111111, function (branch) {
                 expect(branch.items[0].items[1].items).to.eql([
-                    { "id": 123, "position": "5", "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] },
-                    { "id": 122, "position": "6", "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] },
-                    { "id": 121, "position": "7", "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] }
+                    { "id": 123, "position": "5", "items": [], "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] },
+                    { "id": 122, "position": "6", "items": [], "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] },
+                    { "id": 121, "position": "7", "items": [], "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] }
                 ]);
                 done();
             });
@@ -234,9 +234,9 @@ describe("Using the branch selector", function () {
             it("should return an object with ordering of items according to positioning", function (done) {
                 hithercontent.getProjectBranch(111111, i => i, function (branch) {
                     expect(branch.items[0].items[1].items).to.eql([
-                        { "data": { "id": 123, "position": "5", "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
-                        { "data": { "id": 122, "position": "6", "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
-                        { "data": { "id": 121, "position": "7", "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } }
+                        { "id": 123, "position": "5", "items": [], "data": { "id": 123, "position": "5", "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
+                        { "id": 122, "position": "6", "items": [], "data": { "id": 122, "position": "6", "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
+                        { "id": 121, "position": "7", "items": [], "data": { "id": 121, "position": "7", "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } }
                     ]);
                     done();
                 });
@@ -299,9 +299,9 @@ describe("Using the branch selector", function () {
             it("should return an object with ordering of items according to positioning", function (done) {
                 hithercontent.getProjectBranch(111111, hithercontent.reduceItemToKVPairs, function (branch) {
                     expect(branch.items[0].items[1].items).to.eql([
-                        { "id": 123, "position": "5", "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] },
-                        { "id": 122, "position": "6", "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] },
-                        { "id": 121, "position": "7", "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] }
+                        { "id": 123, "position": "5", "items": [], "_id": 123, "_position": "5", "First-tab_Text-element": "Lorem ipsum" },
+                        { "id": 122, "position": "6", "items": [], "_id": 122, "_position": "6", "First-tab_Text-element": "Lorem ipsum" },
+                        { "id": 121, "position": "7", "items": [], "_id": 121, "_position": "7", "First-tab_Text-element": "Lorem ipsum" }
                     ]);
                     done();
                 });
