@@ -499,9 +499,9 @@ describe("Using the branch selector", function () {
                 });
             });
 
-            it("should return an object with an items property whose first item does not have its own items property", function (done) {
+            it("should return an object with an items property whose first item has an empty items property", function (done) {
                 hithercontent.getProjectBranch(111111, 221, i => i, function (branch) {
-                    expect(branch.items[0]).to.not.have.property("items");
+                    expect(branch.items[0].items).to.be.empty;
                     done();
                 });
             });
@@ -538,7 +538,7 @@ describe("Using the branch selector", function () {
 
             it("should return an object with an items property whose first item has an empty items property of its own", function (done) {
                 hithercontent.getProjectBranch(111111, 221, hithercontent.reduceItemToKVPairs, function (branch) {
-                    expect(branch.items[0]).to.not.have.property("items");
+                    expect(branch.items[0].items).to.be.empty;
                     done();
                 });
             });
