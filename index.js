@@ -118,6 +118,8 @@ module.exports = (function () {
           var getItem = function (root_id, siblings_store, finishItem) {
               var storeItem = function (item) {
                       var item_data = processItem(item);
+                      item_data.position = item_data.position || item.data.position || "0"
+                      item_data.id = item_data.id || item.data.id || 0;
                       siblings_store.push(item_data);
                       return item_data;
                   },
