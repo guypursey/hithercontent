@@ -91,20 +91,20 @@ module.exports = (function () {
       return item;
   }
 
-  var getProjectBranch = function (project_id, item_id, aOI, cB) {
+  var getProjectBranch = function (project_id, item_id, iterator, callback) {
 
-      var completeBranch = (typeof cB === "function")
-        ? cB
-        : (typeof aOI === "function")
-            ? aOI
+      var finishBranch = (typeof callback === "function")
+        ? callback
+        : (typeof iterator === "function")
+            ? iterator
             : (typeof item_id === "function")
                 ? item_id
                 : () => {},
-        actOnItem = (typeof cB === "function")
-            ? (typeof aOI === "function")
-                ? aOI
+        processItem = (typeof callback === "function")
+            ? (typeof iterator === "function")
+                ? iterator
                 : i => i.data
-            : (typeof aOI === "function")
+            : (typeof iterator === "function")
                 ? (typeof item_id === "function")
                     ? item_id
                     : i => i.data
@@ -115,29 +115,37 @@ module.exports = (function () {
 
       getJSONfromAPI("/items?project_id=" + project_id, function (project_data) {
 
-          var getSubItems = function (root_id, item_store, pcb) {
+          var getItem = function (root_id, siblings_store, finishItem) {
               var storeItem = function (item) {
-                      var item_data = actOnItem(item);
-                      item_store.push(item_data);
+                      var item_data = processItem(item);
+                      item_data.position = item_data.position || item.data.position || "0"
+                      item_data.id = item_data.id || item.data.id || 0;
+                      siblings_store.push(item_data);
                       return item_data;
                   },
-                  getChildItems = function (item_data) {
-                      var subitems = project_data.data
+                  findChildItems = function (item_data) {
+                      var child_items = project_data.data
                         .filter(i => i.parent_id === root_id);
-                      if (subitems.length) { item_data.items = [] }
-                      async.each(subitems,
-                          (i, cb) => { getSubItems(i.id, item_data.items, cb) },
-                          () => { pcb() }
+                      item_data.items = []
+                      async.each(child_items,
+                          (i, finishChild) => {
+                              getItem(i.id, item_data.items, finishChild)
+                          },
+                          () => {
+                              item_data.items
+                                .sort((a, b) => parseInt(a.position, 10) - parseInt(b.position, 10))
+                              finishItem()
+                          }
                       );
                   };
               if (root_id === 0) {
-                  getChildItems(root);
+                  findChildItems(root);
               } else {
-                  getJSONfromAPI("/items/" + root_id, item => getChildItems(storeItem(item)));
+                  getJSONfromAPI("/items/" + root_id, item => findChildItems(storeItem(item)));
               }
           };
 
-          getSubItems(item_id, root.items, () => { completeBranch(root) });
+          getItem(item_id, root.items, () => { finishBranch(root) });
       });
   };
 
