@@ -97,6 +97,20 @@ describe("Using the branch selector", function () {
             });
         });
 
+        it("should return an object with an items property whose children all have tier properties", function (done) {
+            hithercontent.getProjectBranch(111111, function (branch) {
+                expect(branch.items).to.satisfy(i => i.reduce((p, c) => p && c.hasOwnProperty("tier")), true);
+                done();
+            });
+        });
+
+        it("should return an object with an items property whose children all have a tier of 1", function (done) {
+            hithercontent.getProjectBranch(111111, function (branch) {
+                expect(branch.items).to.satisfy(i => i.reduce((p, c) => p && c.tier === 1, !!i.length));
+                done();
+            });
+        });
+
         it("should return an object with the first item having an id of '1'", function (done) {
             hithercontent.getProjectBranch(111111, function (branch) {
                 expect(branch.items[0]).to.have.property("id", 1);
@@ -111,6 +125,19 @@ describe("Using the branch selector", function () {
             });
         });
 
+        it("should return an object with an items property whose first item's children all have tier properties", function (done) {
+            hithercontent.getProjectBranch(111111, function (branch) {
+                expect(branch.items[0].items).to.satisfy(i => i.reduce((p, c) => p && c.hasOwnProperty("tier")), true);
+                done();
+            });
+        });
+
+        it("should return an object with an items property whose first item's children all have a tier of 2", function (done) {
+            hithercontent.getProjectBranch(111111, function (branch) {
+                expect(branch.items[0].items).to.satisfy(i => i.reduce((p, c) => p && c.tier === 2, !!i.length));
+                done();
+            });
+        });
 
         it("should return an object with the first item's first child item having an id of '11'", function (done) {
             hithercontent.getProjectBranch(111111, function (branch) {
@@ -134,12 +161,26 @@ describe("Using the branch selector", function () {
             });
         });
 
+        it("should return an object with an items property whose first item's second item's children all have tier properties", function (done) {
+            hithercontent.getProjectBranch(111111, function (branch) {
+                expect(branch.items[0].items[1].items).to.satisfy(i => i.reduce((p, c) => p && c.hasOwnProperty("tier")), true);
+                done();
+            });
+        });
+
+        it("should return an object with an items property whose first item's second item's children all have a tier of 3", function (done) {
+            hithercontent.getProjectBranch(111111, function (branch) {
+                expect(branch.items[0].items[1].items).to.satisfy(i => i.reduce((p, c) => p && c.tier === 3, !!i.length));
+                done();
+            });
+        });
+
         it("should return an object with ordering of items according to positioning", function (done) {
             hithercontent.getProjectBranch(111111, function (branch) {
                 expect(branch.items[0].items[1].items).to.eql([
-                    { "id": 123, "position": "5", "items": [], "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] },
-                    { "id": 122, "position": "6", "items": [], "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] },
-                    { "id": 121, "position": "7", "items": [], "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] }
+                    { "id": 123, "position": "5", "tier": 3, "items": [], "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] },
+                    { "id": 122, "position": "6", "tier": 3, "items": [], "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] },
+                    { "id": 121, "position": "7", "tier": 3, "items": [], "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] }
                 ]);
                 done();
             });
@@ -170,6 +211,20 @@ describe("Using the branch selector", function () {
             it("should return an object with an items property whose first item contains a data property", function (done) {
                 hithercontent.getProjectBranch(111111, i => i, function (branch) {
                     expect(branch.items[0]).to.have.property("data");
+                    done();
+                });
+            });
+
+            it("should return an object with an items property whose children all have tier properties", function (done) {
+                hithercontent.getProjectBranch(111111, i => i, function (branch) {
+                    expect(branch.items).to.satisfy(i => i.reduce((p, c) => p && c.hasOwnProperty("tier")), true);
+                    done();
+                });
+            });
+
+            it("should return an object with an items property whose children all have a tier of 1", function (done) {
+                hithercontent.getProjectBranch(111111, i => i, function (branch) {
+                    expect(branch.items).to.satisfy(i => i.reduce((p, c) => p && c.tier === 1, !!i.length));
                     done();
                 });
             });
@@ -209,6 +264,20 @@ describe("Using the branch selector", function () {
                 });
             });
 
+            it("should return an object with an items property whose first item's children all have tier properties", function (done) {
+                hithercontent.getProjectBranch(111111, i => i, function (branch) {
+                    expect(branch.items[0].items).to.satisfy(i => i.reduce((p, c) => p && c.hasOwnProperty("tier")), true);
+                    done();
+                });
+            });
+
+            it("should return an object with an items property whose first item's children all have a tier of 2", function (done) {
+                hithercontent.getProjectBranch(111111, i => i, function (branch) {
+                    expect(branch.items[0].items).to.satisfy(i => i.reduce((p, c) => p && c.tier === 2, !!i.length));
+                    done();
+                });
+            });
+
             it("should return an object with the first item's first child item having an id of '11'", function (done) {
                 hithercontent.getProjectBranch(111111, i => i, function (branch) {
                     expect(branch.items[0].items[0].data).to.have.property("id", 11);
@@ -231,12 +300,26 @@ describe("Using the branch selector", function () {
                 });
             });
 
+            it("should return an object with an items property whose first item's second item's children all have tier properties", function (done) {
+                hithercontent.getProjectBranch(111111, i => i, function (branch) {
+                    expect(branch.items[0].items[1].items).to.satisfy(i => i.reduce((p, c) => p && c.hasOwnProperty("tier")), true);
+                    done();
+                });
+            });
+
+            it("should return an object with an items property whose first item's second item's children all have a tier of 3", function (done) {
+                hithercontent.getProjectBranch(111111, i => i, function (branch) {
+                    expect(branch.items[0].items[1].items).to.satisfy(i => i.reduce((p, c) => p && c.tier === 3, !!i.length));
+                    done();
+                });
+            });
+
             it("should return an object with ordering of items according to positioning", function (done) {
                 hithercontent.getProjectBranch(111111, i => i, function (branch) {
                     expect(branch.items[0].items[1].items).to.eql([
-                        { "id": 123, "position": "5", "items": [], "data": { "id": 123, "position": "5", "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
-                        { "id": 122, "position": "6", "items": [], "data": { "id": 122, "position": "6", "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
-                        { "id": 121, "position": "7", "items": [], "data": { "id": 121, "position": "7", "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } }
+                        { "id": 123, "position": "5", "tier": 3, "items": [], "data": { "id": 123, "position": "5", "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
+                        { "id": 122, "position": "6", "tier": 3, "items": [], "data": { "id": 122, "position": "6", "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } },
+                        { "id": 121, "position": "7", "tier": 3, "items": [], "data": { "id": 121, "position": "7", "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } }
                     ]);
                     done();
                 });
@@ -266,6 +349,20 @@ describe("Using the branch selector", function () {
                 });
             });
 
+            it("should return an object with an items property whose children all have tier properties", function (done) {
+                hithercontent.getProjectBranch(111111, hithercontent.reduceItemToKVPairs, function (branch) {
+                    expect(branch.items).to.satisfy(i => i.reduce((p, c) => p && c.hasOwnProperty("tier")), true);
+                    done();
+                });
+            });
+
+            it("should return an object with an items property whose children all have a tier of 3", function (done) {
+                hithercontent.getProjectBranch(111111, hithercontent.reduceItemToKVPairs, function (branch) {
+                    expect(branch.items).to.satisfy(i => i.reduce((p, c) => p && c.tier === 1, !!i.length));
+                    done();
+                });
+            });
+
             it("should return an object with the first item having the two child items as specified", function (done) {
                 hithercontent.getProjectBranch(111111, hithercontent.reduceItemToKVPairs, function (branch) {
                     expect(branch.items[0].items).to.have.length(2);
@@ -273,6 +370,19 @@ describe("Using the branch selector", function () {
                 });
             });
 
+            it("should return an object with an items property whose first item's children all have tier properties", function (done) {
+                hithercontent.getProjectBranch(111111, hithercontent.reduceItemToKVPairs, function (branch) {
+                    expect(branch.items[0].items).to.satisfy(i => i.reduce((p, c) => p && c.hasOwnProperty("tier")), true);
+                    done();
+                });
+            });
+
+            it("should return an object with an items property whose first item's children all have a tier of 3", function (done) {
+                hithercontent.getProjectBranch(111111, hithercontent.reduceItemToKVPairs, function (branch) {
+                    expect(branch.items[0].items).to.satisfy(i => i.reduce((p, c) => p && c.tier === 2, !!i.length));
+                    done();
+                });
+            });
 
             it("should return an object with the first item's first child item having an id of '11'", function (done) {
                 hithercontent.getProjectBranch(111111, hithercontent.reduceItemToKVPairs, function (branch) {
@@ -296,12 +406,26 @@ describe("Using the branch selector", function () {
                 });
             });
 
+            it("should return an object with an items property whose first item's second item's children all have tier properties", function (done) {
+                hithercontent.getProjectBranch(111111, hithercontent.reduceItemToKVPairs, function (branch) {
+                    expect(branch.items[0].items[1].items).to.satisfy(i => i.reduce((p, c) => p && c.hasOwnProperty("tier")), true);
+                    done();
+                });
+            });
+
+            it("should return an object with an items property whose first item's second item's children all have a tier of 3", function (done) {
+                hithercontent.getProjectBranch(111111, hithercontent.reduceItemToKVPairs, function (branch) {
+                    expect(branch.items[0].items[1].items).to.satisfy(i => i.reduce((p, c) => p && c.tier === 3, !!i.length));
+                    done();
+                });
+            });
+
             it("should return an object with ordering of items according to positioning", function (done) {
                 hithercontent.getProjectBranch(111111, hithercontent.reduceItemToKVPairs, function (branch) {
                     expect(branch.items[0].items[1].items).to.eql([
-                        { "id": 123, "position": "5", "items": [], "_id": 123, "_position": "5", "First-tab_Text-element": "Lorem ipsum" },
-                        { "id": 122, "position": "6", "items": [], "_id": 122, "_position": "6", "First-tab_Text-element": "Lorem ipsum" },
-                        { "id": 121, "position": "7", "items": [], "_id": 121, "_position": "7", "First-tab_Text-element": "Lorem ipsum" }
+                        { "id": 123, "position": "5", "tier": 3, "items": [], "_id": 123, "_position": "5", "First-tab_Text-element": "Lorem ipsum" },
+                        { "id": 122, "position": "6", "tier": 3, "items": [], "_id": 122, "_position": "6", "First-tab_Text-element": "Lorem ipsum" },
+                        { "id": 121, "position": "7", "tier": 3, "items": [], "_id": 121, "_position": "7", "First-tab_Text-element": "Lorem ipsum" }
                     ]);
                     done();
                 });

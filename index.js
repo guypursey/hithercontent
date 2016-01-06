@@ -115,11 +115,12 @@ module.exports = (function () {
 
       getJSONfromAPI("/items?project_id=" + project_id, function (project_data) {
 
-          var getItem = function (root_id, siblings_store, finishItem) {
+          var getItem = function (root_id, tier, siblings_store, finishItem) {
               var storeItem = function (item) {
                       var item_data = processItem(item);
                       item_data.position = item_data.position || item.data.position || "0"
                       item_data.id = item_data.id || item.data.id || 0;
+                      item_data.tier = item_data.tier || tier
                       siblings_store.push(item_data);
                       return item_data;
                   },
@@ -129,7 +130,7 @@ module.exports = (function () {
                       item_data.items = []
                       async.each(child_items,
                           (i, finishChild) => {
-                              getItem(i.id, item_data.items, finishChild)
+                              getItem(i.id, tier + 1, item_data.items, finishChild)
                           },
                           () => {
                               item_data.items
@@ -145,7 +146,7 @@ module.exports = (function () {
               }
           };
 
-          getItem(item_id, root.items, () => { finishBranch(root) });
+          getItem(item_id, item_id && 1, root.items, () => { finishBranch(root) });
       });
   };
 
