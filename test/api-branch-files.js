@@ -35,6 +35,12 @@ var project_content = {
     "221": { "data": { "id": 221, "position": "10", "config": [ { "label": "First tab", "elements": [ { "type": "text", "label": "Text element", "value": "Lorem ipsum" } ] } ] } }
 };
 
+var file_content = {
+  "1": { "data": [ { "id": 1, "field": "abc123", "type": "1", "url": "http://link.to/filename.png", "filename": "original.png", "size": 123456, "created_at": "2015-12-10 18:49:17", "updated_at": "2015-12-10 18:49:17" } ] },
+  "2": { "data": [ { "id": 2, "field": "abc123", "type": "1", "url": "http://link.to/filename.png", "filename": "original.png", "size": 123456, "created_at": "2015-12-10 18:49:17", "updated_at": "2015-12-10 18:49:17" } ] }
+
+}
+
 describe("Using the branch selector", function () {
 
     before(function () {
@@ -58,6 +64,10 @@ describe("Using the branch selector", function () {
             if (options.hasOwnProperty("auth") && (options.auth === auth_check)) {
                 if (path === "/items?project_id=111111") {
                     response.write(JSON.stringify(project_overview));
+                } else if (item_number = path.match(/\/items\/(.*)\/files/)) {
+                  if (file_content.hasOwnProperty(item_number[1])) {
+                    response.write(JSON.stringify(project_content[file_number[1]]));
+                  }
                 } else if (item_number = path.match(/\/items\/(.*)/)) {
                     if (project_content.hasOwnProperty(item_number[1])) {
                         response.write(JSON.stringify(project_content[item_number[1]]));
