@@ -37,10 +37,11 @@ var project_content = {
 
 var file_content = {
   "1": { "data": [
-      { "id": 1, "field": "abc123", "type": "1", "url": "http://link.to/filename.png", "filename": "original.png", "size": 123456, "created_at": "2015-12-10 18:49:17", "updated_at": "2015-12-10 18:49:17" }
+      { "id": 1, "field": "el1", "type": "field", "url": "http://link.to/filename.png", "filename": "file1.png", "size": 123456, "created_at": "2015-12-10 18:49:17", "updated_at": "2015-12-10 18:49:17" }
   ] },
   "2": { "data": [
-      { "id": 2, "field": "abc123", "type": "1", "url": "http://link.to/filename.png", "filename": "original.png", "size": 123456, "created_at": "2015-12-10 18:49:17", "updated_at": "2015-12-10 18:49:17" }
+      { "id": 2, "field": "el2", "type": "field", "url": "http://link.to/filename.png", "filename": "file2.png", "size": 123456, "created_at": "2015-12-10 18:49:17", "updated_at": "2015-12-10 18:49:17" },
+      { "id": 2, "field": "el3", "type": "field", "url": "http://link.to/filename.png", "filename": "file3.png", "size": 123456, "created_at": "2015-12-10 18:49:17", "updated_at": "2015-12-10 18:49:17" }
   ] }
 }
 
@@ -69,7 +70,7 @@ describe("Using the branch selector", function () {
                     response.write(JSON.stringify(project_overview));
                 } else if (item_number = path.match(/\/items\/(.*)\/files/)) {
                   if (file_content.hasOwnProperty(item_number[1])) {
-                    response.write(JSON.stringify(project_content[file_number[1]]));
+                    response.write(JSON.stringify(file_content[item_number[1]]));
                   }
                 } else if (item_number = path.match(/\/items\/(.*)/)) {
                     if (project_content.hasOwnProperty(item_number[1])) {
