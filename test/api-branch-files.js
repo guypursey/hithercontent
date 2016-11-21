@@ -36,9 +36,12 @@ var project_content = {
 };
 
 var file_content = {
-  "1": { "data": [ { "id": 1, "field": "abc123", "type": "1", "url": "http://link.to/filename.png", "filename": "original.png", "size": 123456, "created_at": "2015-12-10 18:49:17", "updated_at": "2015-12-10 18:49:17" } ] },
-  "2": { "data": [ { "id": 2, "field": "abc123", "type": "1", "url": "http://link.to/filename.png", "filename": "original.png", "size": 123456, "created_at": "2015-12-10 18:49:17", "updated_at": "2015-12-10 18:49:17" } ] }
-
+  "1": { "data": [
+      { "id": 1, "field": "abc123", "type": "1", "url": "http://link.to/filename.png", "filename": "original.png", "size": 123456, "created_at": "2015-12-10 18:49:17", "updated_at": "2015-12-10 18:49:17" }
+  ] },
+  "2": { "data": [
+      { "id": 2, "field": "abc123", "type": "1", "url": "http://link.to/filename.png", "filename": "original.png", "size": 123456, "created_at": "2015-12-10 18:49:17", "updated_at": "2015-12-10 18:49:17" }
+  ] }
 }
 
 describe("Using the branch selector", function () {
