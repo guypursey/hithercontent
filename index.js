@@ -84,11 +84,42 @@ module.exports = (function () {
                       item[k] = v.options.filter(v => v.selected).map(v => v.label);
                   } else if (v.type === "section") {
                       item[k] = v.subtitle;
+                  } else if (v.type === "files") {
+                      console.log("files id'd", v.id, v.name, v.url)
+                      item[k] = v.url
                   }
               });
           });
       }
       return item;
+  }
+
+  var getFilesForItem = function (item, callback) {
+      var relevantElements = []
+      if (Array.isArray(item.data.config)) {
+          item.data.config.forEach(c => {
+              if (Array.isArray(c.elements)) {
+                  relevantElements = relevantElements.concat(c.elements.filter(v => v.type === "files"))
+              }
+          })
+      }
+
+      if (relevantElements.length > 0) {
+          getJSONfromAPI(`/items/${item.data.id}/files`, filesData => {
+              // go through each item and match to element
+              filesData.data.forEach(f => {
+                  relevantElements.forEach(e => {
+                      if (f.field === e.name) {
+                          e.url = Array.isArray(e.url) ? e.url.concat(f.url) : [f.url]
+                          e.filename = Array.isArray(e.filename) ? e.filename.concat(f.filename) : [f.filename]
+                      }
+                  })
+              })
+              callback(item)
+          })
+      } else {
+        callback(item)
+      }
   }
 
   var getProjectBranch = function (project_id, item_id, iterator, callback) {
@@ -150,12 +181,73 @@ module.exports = (function () {
       });
   };
 
+  var getProjectBranchWithFileInfo = function (project_id, item_id, iterator, callback) {
+
+      var finishBranch = (typeof callback === "function")
+        ? callback
+        : (typeof iterator === "function")
+            ? iterator
+            : (typeof item_id === "function")
+                ? item_id
+                : () => {},
+        processItem = (typeof callback === "function")
+            ? (typeof iterator === "function")
+                ? iterator
+                : i => i.data
+            : (typeof iterator === "function")
+                ? (typeof item_id === "function")
+                    ? item_id
+                    : i => i.data
+                : i => i.data,
+        item_id = (typeof item_id === "number") ? item_id : 0,
+        project_id = (typeof project_id === "number") ? project_id : 0,
+        root = { "items": [] };
+
+      getJSONfromAPI("/items?project_id=" + project_id, function (project_data) {
+
+          var getItem = function (root_id, tier, siblings_store, finishItem) {
+              var storeItem = function (item) {
+                      var item_data = processItem(item);
+                      item_data.position = item_data.position || item.data.position || "0"
+                      item_data.id = item_data.id || item.data.id || 0;
+                      item_data.tier = item_data.tier || tier
+                      siblings_store.push(item_data);
+                      return item_data;
+                  },
+                  findChildItems = function (item_data) {
+                      var child_items = project_data.data
+                        .filter(i => i.parent_id === root_id);
+                      item_data.items = []
+                      async.each(child_items,
+                          (i, finishChild) => {
+                              getItem(i.id, tier + 1, item_data.items, finishChild)
+                          },
+                          () => {
+                              item_data.items
+                                .sort((a, b) => parseInt(a.position, 10) - parseInt(b.position, 10))
+                              finishItem()
+                          }
+                      );
+                  };
+              if (root_id === 0) {
+                  findChildItems(root);
+              } else {
+                  getJSONfromAPI("/items/" + root_id, item => { getFilesForItem(item, (item) => { findChildItems(storeItem(item)) }) });
+              }
+          };
+
+          getItem(item_id, item_id && 1, root.items, () => { finishBranch(root) });
+      });
+  };
+
   return {
     init: init,
     reset: reset,
     getJSONfromAPI: getJSONfromAPI,
     reduceItemToKVPairs: reduceItemToKVPairs,
-    getProjectBranch: getProjectBranch
+    getProjectBranch: getProjectBranch,
+    getProjectBranchWithFileInfo: getProjectBranchWithFileInfo,
+    getFilesForItem: getFilesForItem
   }
 
 }());
