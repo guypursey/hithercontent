@@ -68,6 +68,19 @@ Nothing. Acts asynchronously using the `callback` argument.
 
 Nothing. Acts asynchronously using the `callback` argument.
 
+### `getFilesForItem`
+
+#### Arguments
+
+ - `item`: *Object.* **Required.** The item data returned by GatherContent that you want to append file details to.
+ - `callback`: *Function.* **Required.** Should have one argument representing the item originally provided but with the file details added.
+
+Any item given to the `callback` function should contain `url` and `filename` arrays with the elements in each corresponding to files related to the fields on GatherContent.
+
+#### Returns
+
+Nothing. Acts asynchronously using the `callback` argument.
+
 ### `reduceItemToKVPairs`
 
 #### Arguments
