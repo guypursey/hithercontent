@@ -179,7 +179,7 @@ module.exports = (function () {
               if (root_id === 0) {
                   findChildItems(root);
               } else {
-                  getJSONfromAPI("/items/" + root_id, item => findChildItems(storeItem(item)));
+                  getJSONfromAPI("/items/" + root_id, item => { getFiles(item, (item) => { findChildItems(storeItem(item)) }) });
               }
           };
 
