@@ -25,8 +25,8 @@ var file_content = {
 			{ "id": 2, "field": "el2", "type": "field", "url": "http://link.to/filename2.png", "filename": "file2.png", "size": 123456, "created_at": "2015-12-10 18:49:17", "updated_at": "2015-12-10 18:49:17" },
 	] },
 	"3": { "data": [
-			{ "id": 3, "field": "el2", "type": "field", "url": "http://link.to/filename3.png", "filename": "file3.png", "size": 123456, "created_at": "2015-12-10 18:49:17", "updated_at": "2015-12-10 18:49:17" },
-			{ "id": 4, "field": "el3", "type": "field", "url": "http://link.to/filename4.png", "filename": "file4.png", "size": 123456, "created_at": "2015-12-10 18:49:17", "updated_at": "2015-12-10 18:49:17" }
+			{ "id": 3, "field": "el4", "type": "field", "url": "http://link.to/filename3.png", "filename": "file3.png", "size": 123456, "created_at": "2015-12-10 18:49:17", "updated_at": "2015-12-10 18:49:17" },
+			{ "id": 4, "field": "el4", "type": "field", "url": "http://link.to/filename4.png", "filename": "file4.png", "size": 123456, "created_at": "2015-12-10 18:49:17", "updated_at": "2015-12-10 18:49:17" }
 	] }
 }
 
@@ -62,8 +62,8 @@ describe("Using the file requester for an item", function () {
 			      { "id": 2, "field": "el2", "type": "field", "url": "http://link.to/filename2.png", "filename": "file2.png", "size": 123456, "created_at": "2015-12-10 18:49:17", "updated_at": "2015-12-10 18:49:17" },
 			  ] },
 				"3": { "data": [
-			      { "id": 3, "field": "el2", "type": "field", "url": "http://link.to/filename3.png", "filename": "file3.png", "size": 123456, "created_at": "2015-12-10 18:49:17", "updated_at": "2015-12-10 18:49:17" },
-			      { "id": 4, "field": "el3", "type": "field", "url": "http://link.to/filename4.png", "filename": "file4.png", "size": 123456, "created_at": "2015-12-10 18:49:17", "updated_at": "2015-12-10 18:49:17" }
+			      { "id": 3, "field": "el4", "type": "field", "url": "http://link.to/filename3.png", "filename": "file3.png", "size": 123456, "created_at": "2015-12-10 18:49:17", "updated_at": "2015-12-10 18:49:17" },
+			      { "id": 4, "field": "el4", "type": "field", "url": "http://link.to/filename4.png", "filename": "file4.png", "size": 123456, "created_at": "2015-12-10 18:49:17", "updated_at": "2015-12-10 18:49:17" }
 			  ] }
 			}
 
@@ -311,6 +311,113 @@ describe("Using the file requester for an item", function () {
 					done()
 				})
 			})
-
 		})
+
+		describe("while specifying an item with one field but two files", function() {
+			it("should return an object", function(done) {
+				hithercontent.getFilesForItem(project_content["3"], function(item) {
+					expect(item).to.be.an("object")
+					done()
+				})
+			})
+			it("should return an object still containing a `data` property", function(done) {
+				hithercontent.getFilesForItem(project_content["3"], function(item) {
+					expect(item).to.be.have.keys("data")
+					done()
+				})
+			})
+			it("should return an object still containing a data property with a `config` property", function(done) {
+				hithercontent.getFilesForItem(project_content["3"], function(item) {
+					expect(item.data).to.be.have.property("config")
+					done()
+				})
+			})
+			it("should return an object where config is still an array", function(done) {
+				hithercontent.getFilesForItem(project_content["3"], function(item) {
+					expect(item.data.config).to.be.an("array")
+					done()
+				})
+			})
+			it("should return an object where `config` still only contains one item", function(done) {
+				hithercontent.getFilesForItem(project_content["3"], function(item) {
+					expect(item.data.config).to.have.length(1)
+					done()
+				})
+			})
+			it("should return an object where the only `config` item has an `elements` property", function(done) {
+				hithercontent.getFilesForItem(project_content["3"], function(item) {
+					expect(item.data.config[0]).to.have.property("elements")
+					done()
+				})
+			})
+			it("should return an object where `elements` still only contains one item", function(done) {
+				hithercontent.getFilesForItem(project_content["3"], function(item) {
+					expect(item.data.config[0].elements).to.have.length(1)
+					done()
+				})
+			})
+			it("should return an object where the one element has a `url` property", function(done) {
+				hithercontent.getFilesForItem(project_content["3"], function(item) {
+					expect(item.data.config[0].elements[0]).to.be.have.property("url")
+					done()
+				})
+			})
+			it("should return an object where the one element has a `filename` property", function(done) {
+				hithercontent.getFilesForItem(project_content["3"], function(item) {
+					expect(item.data.config[0].elements[0]).to.be.have.property("filename")
+					done()
+				})
+			})
+			it("should return an object where the single `url` property is an array", function(done) {
+				hithercontent.getFilesForItem(project_content["3"], function(item) {
+					expect(item.data.config[0].elements[0].url).to.be.an("array")
+					done()
+				})
+			})
+			it("should return an object where the single `filename` property is an array", function(done) {
+				hithercontent.getFilesForItem(project_content["3"], function(item) {
+					expect(item.data.config[0].elements[0].filename).to.be.an("array")
+					done()
+				})
+			})
+			it("should return an object where the one `url` array has one element", function(done) {
+				hithercontent.getFilesForItem(project_content["3"], function(item) {
+					expect(item.data.config[0].elements[0].url).to.have.length(2)
+					done()
+				})
+			})
+			it("should return an object where the one `filename` property has one element", function(done) {
+				hithercontent.getFilesForItem(project_content["3"], function(item) {
+					expect(item.data.config[0].elements[0].filename).to.have.length(2)
+					done()
+				})
+			})
+
+			it("should return an object where the single `url` element is `http://link.to/filename3.png`", function(done) {
+				hithercontent.getFilesForItem(project_content["3"], function(item) {
+					expect(item.data.config[0].elements[0].url[0]).to.eql("http://link.to/filename3.png")
+					done()
+				})
+			})
+			it("should return an object where the single `filename` property is `file3.png`", function(done) {
+				hithercontent.getFilesForItem(project_content["3"], function(item) {
+					expect(item.data.config[0].elements[0].filename[0]).to.eql("file3.png")
+					done()
+				})
+			})
+
+			it("should return an object where the single `url` element is `http://link.to/filename4.png`", function(done) {
+				hithercontent.getFilesForItem(project_content["3"], function(item) {
+					expect(item.data.config[0].elements[0].url[1]).to.eql("http://link.to/filename4.png")
+					done()
+				})
+			})
+			it("should return an object where the single `filename` property is `file4.png`", function(done) {
+				hithercontent.getFilesForItem(project_content["3"], function(item) {
+					expect(item.data.config[0].elements[0].filename[1]).to.eql("file4.png")
+					done()
+				})
+			})
+		})
+
 });
