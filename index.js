@@ -117,8 +117,8 @@ module.exports = (function () {
                   relevantElements.forEach(e => {
                       console.log("comparing", f, e)
                       if (f.field === e.name) {
-                          e.url = f.url
-                          e.filename = f.filename
+                          e.url = Array.isArray(e.url) ? e.url.concat(f.url) : [f.url]
+                          e.filename = Array.isArray(e.filename) ? e.filename.concat(f.filename) : [f.filename]
                       }
                   })
               })
