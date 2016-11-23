@@ -98,24 +98,17 @@ module.exports = (function () {
       var relevantElements = []
       if (Array.isArray(item.data.config)) {
           item.data.config.forEach(c => {
-              //console.log(c)
               if (Array.isArray(c.elements)) {
                   relevantElements = relevantElements.concat(c.elements.filter(v => v.type === "files"))
               }
           })
       }
-      if (relevantElements.length > 0) {
-          console.log(item.data.id, item.data.name, relevantElements.length)
-      }
-      //callback(item)
 
       if (relevantElements.length > 0) {
-          //console.log(relevantElements)
           getJSONfromAPI(`/items/${item.data.id}/files`, filesData => {
               // go through each item and match to element
               filesData.data.forEach(f => {
                   relevantElements.forEach(e => {
-                      console.log("comparing", f, e)
                       if (f.field === e.name) {
                           e.url = Array.isArray(e.url) ? e.url.concat(f.url) : [f.url]
                           e.filename = Array.isArray(e.filename) ? e.filename.concat(f.filename) : [f.filename]
