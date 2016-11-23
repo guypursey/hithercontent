@@ -127,6 +127,40 @@ module.exports = (function () {
                       siblings_store.push(item_data);
                       return item_data;
                   },
+                  getFiles = function (item, callback) {
+                      var relevantElements = []
+                      if (Array.isArray(item.data.config)) {
+                          item.data.config.forEach(c => {
+                              //console.log(c)
+                              if (Array.isArray(c.elements)) {
+                                  relevantElements = relevantElements.concat(c.elements.filter(v => v.type === "files"))
+                              }
+                          })
+                      }
+                      if (relevantElements.length > 0) {
+                          console.log(item.data.id, item.data.name, relevantElements.length)
+                      }
+                      //callback(item)
+
+                      if (relevantElements.length > 0) {
+                          //console.log(relevantElements)
+                          getJSONfromAPI(`/items/${item.data.id}/files`, filesData => {
+                              // go through each item and match to element
+                              filesData.data.forEach(f => {
+                                  relevantElements.forEach(e => {
+                                      console.log("comparing", f, e)
+                                      if (f.field === e.name) {
+                                          e.url = f.url
+                                          e.filename = f.filename
+                                      }
+                                  })
+                              })
+                              callback(item)
+                          })
+                      } else {
+                        callback(item)
+                      }
+                  },
                   findChildItems = function (item_data) {
                       var child_items = project_data.data
                         .filter(i => i.parent_id === root_id);
