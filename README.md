@@ -14,7 +14,7 @@ Let's say your JSON file is called `_auth.json`. The following code will
 initiate the `hithercontent` for use with your project.
 
     var fs = require("fs"),
-        auth = JSON.parse(fs.readFileSync("_auth.json", { "encoding": "utf8" })),
+        auth = JSON.parse(fs.readFileSync(`_auth.json`, { "encoding": "utf8" })),
         hithercontent = require("hithercontent");
 
     hithercontent.init(auth);
