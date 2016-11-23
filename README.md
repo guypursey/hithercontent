@@ -68,6 +68,25 @@ Nothing. Acts asynchronously using the `callback` argument.
 
 Nothing. Acts asynchronously using the `callback` argument.
 
+### `getProjectBranchWithFileInfo`
+
+*Note:* This differs from `getProjectBranch` in that it makes an additional call to the API for any item within the branch that contains files or attachments based elements. If there are many file fields in a project, this could at most double number of requests made to the API, which is why `getProjectBranch` still stands.
+
+#### Arguments
+
+ - `project_id`: *String.* **Required.** The project ID for the project you want to fetch from.
+ - `item_id`: *String.* **Optional.** The item ID for the branch you want to fetch. This will then get any items below this in the structure. If omitted, the whole project will be fetched.
+ - `iterator`: *Function.* **Optional.** Should have one argument, which represents the item data that you expect to receive. You can use the iterator to determine how you want to receive each item in the branch you are retrieving. For example, you can use `hithercontent.reduceItemToKVPairs` (see below) to have your branch return with simplified values for use in a template. Or you can use an identity function (`i => i`) to return each item as it is. If this argument is not given, at present, each branch item's data property will be extracted (the equivalent of `i => i.data`).
+ - `callback`: *Function.* **Required.** Should have one argument, which represents the branch you are retrieving, as an object. You can use this function to act on the branch asynchronously.
+
+ Any item that sits under a parent item on GatherContent will be found in the `items` property of its parent item. If you specify an `item_id`, this means you will get your item at the top-level but it will feature an `items` property containing any items containing any child items from GatherContent, which in turn will each have their own items properties containing any children they have, and so on. If you do not specify `item_id` or set it to `0`, you will receive an object containing an `items` array within which you will find all the top-level items of the project, each with their own `items` property containing any children and so on.
+
+ Each item will have a bonus `tier` property to show how far below the parent or root item it sits. The requested item has a `tier` of 1, its children will have a `tier` of 2, their children will have a `tier` of 3, and so on.
+
+#### Returns
+
+Nothing. Acts asynchronously using the `callback` argument.
+
 ### `getFilesForItem`
 
 #### Arguments
