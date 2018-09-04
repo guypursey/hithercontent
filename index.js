@@ -85,7 +85,6 @@ module.exports = (function () {
                   } else if (v.type === "section") {
                       item[k] = v.subtitle;
                   } else if (v.type === "files") {
-                      console.log("files id'd", v.id, v.name, v.url)
                       item[k] = v.url
                   }
               });
